@@ -2,9 +2,5 @@ services:
   - type: web
     name: hujun
     runtime: static
-    buildCommand: ""
+    buildCommand: "true"
     staticPublishPath: .
-    routes:
-      - type: rewrite
-        source: /*
-        destination: /index.html
