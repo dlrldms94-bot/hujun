@@ -1,0 +1,288 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  min-height: 100%;
+}
+
+body {
+  background: #0b1630;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+.stage {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  min-height: 100svh;
+}
+
+.stage__bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.stage__deco,
+.stage__logo,
+.stage__tit,
+.stage__hujun,
+.stage__logos {
+  position: absolute;
+  z-index: 1;
+}
+
+/* ========== 세로 정렬: 1024px 이하 또는 세로가 가로보다 긴 경우 ========== */
+.stage__deco {
+  width: clamp(6px, 2vw, 11px);
+  height: auto;
+  opacity: 0.9;
+}
+
+.stage__deco--tl {
+  top: 4.5%;
+  left: 3%;
+}
+
+.stage__deco--tr {
+  top: 4.5%;
+  right: 3%;
+  transform: scaleX(-1);
+}
+
+.stage__deco--bl {
+  bottom: 5%;
+  left: 3%;
+  transform: scaleY(-1);
+}
+
+.stage__deco--br {
+  bottom: 5%;
+  right: 3%;
+  transform: scale(-1);
+}
+
+.stage__logo {
+  top: 3.8%;
+  left: 50%;
+  width: min(42vw, 168px);
+  transform: translateX(-50%);
+}
+
+.stage__tit {
+  top: 14%;
+  left: 50%;
+  width: min(86vw, 360px);
+  transform: translateX(-50%);
+}
+
+.stage__hujun {
+  top: 48%;
+  left: 50%;
+  width: min(78vw, 340px);
+  transform: translateX(-50%);
+}
+
+.stage__logos {
+  bottom: 3.2%;
+  left: 50%;
+  width: min(88vw, 420px);
+  transform: translateX(-50%);
+}
+
+/* ========== PC 가로 정렬: 1025px 이상 && 가로 >= 세로 ========== */
+@media (min-width: 1025px) and (min-aspect-ratio: 1/1) {
+  .stage {
+    height: 100svh;
+  }
+
+  .stage__deco {
+    width: clamp(10px, 1vw, 18px);
+  }
+
+  .stage__deco--tl {
+    top: 5.5%;
+    left: 2.2%;
+  }
+
+  .stage__deco--tr {
+    top: 5.5%;
+    right: 2.2%;
+  }
+
+  .stage__deco--bl {
+    bottom: 6%;
+    left: 2.2%;
+  }
+
+  .stage__deco--br {
+    bottom: 6%;
+    right: 2.2%;
+  }
+
+  .stage__logo {
+    top: 4.8%;
+    left: 4.5%;
+    width: clamp(140px, 13.5vw, 258px);
+    transform: none;
+  }
+
+  .stage__tit {
+    top: 50%;
+    left: 6.5%;
+    width: clamp(320px, 35.5vw, 681px);
+    transform: translateY(-52%);
+  }
+
+  .stage__hujun {
+    top: 50%;
+    left: auto;
+    right: 4.5%;
+    width: clamp(360px, 42.5vw, 817px);
+    transform: translateY(-46%);
+  }
+
+  .stage__logos {
+    bottom: 4.2%;
+    left: 50%;
+    width: clamp(420px, 36vw, 691px);
+    transform: translateX(-50%);
+  }
+}
+
+@media (min-width: 1025px) and (min-aspect-ratio: 1/1) and (max-aspect-ratio: 16/10) {
+  .stage__tit {
+    width: clamp(280px, 32vw, 560px);
+  }
+
+  .stage__hujun {
+    width: clamp(300px, 38vw, 680px);
+  }
+}
+
+/* Motion */
+@media (prefers-reduced-motion: no-preference) {
+  .stage__logo,
+  .stage__tit,
+  .stage__hujun,
+  .stage__logos,
+  .stage__deco {
+    opacity: 0;
+    animation: fade-up 0.85s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  }
+
+  .stage__deco--tl,
+  .stage__deco--tr {
+    animation-name: fade-in;
+    animation-delay: 0.05s;
+  }
+
+  .stage__logo {
+    animation-delay: 0.15s;
+  }
+
+  .stage__tit {
+    animation-delay: 0.28s;
+  }
+
+  .stage__hujun {
+    animation-delay: 0.4s;
+  }
+
+  .stage__logos,
+  .stage__deco--bl,
+  .stage__deco--br {
+    animation-delay: 0.55s;
+  }
+
+  .stage__hujun {
+    animation:
+      fade-up 0.85s cubic-bezier(0.22, 1, 0.36, 1) 0.4s forwards,
+      float-y 4.5s ease-in-out 1.3s infinite;
+  }
+}
+
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    translate: 0 18px;
+  }
+  to {
+    opacity: 1;
+    translate: 0 0;
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 0.9;
+  }
+}
+
+@keyframes float-y {
+  0%,
+  100% {
+    translate: 0 0;
+  }
+  50% {
+    translate: 0 -10px;
+  }
+}
+
+@media (min-width: 1025px) and (min-aspect-ratio: 1/1) and (prefers-reduced-motion: no-preference) {
+  .stage__logo {
+    animation-name: fade-in-left;
+  }
+
+  .stage__tit {
+    animation-name: fade-in-left;
+  }
+
+  .stage__hujun {
+    animation:
+      fade-in-right 0.85s cubic-bezier(0.22, 1, 0.36, 1) 0.4s forwards,
+      float-y 4.5s ease-in-out 1.3s infinite;
+  }
+}
+
+@keyframes fade-in-left {
+  from {
+    opacity: 0;
+    translate: -24px 0;
+  }
+  to {
+    opacity: 1;
+    translate: 0 0;
+  }
+}
+
+@keyframes fade-in-right {
+  from {
+    opacity: 0;
+    translate: 24px 0;
+  }
+  to {
+    opacity: 1;
+    translate: 0 0;
+  }
+}
