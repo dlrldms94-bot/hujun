@@ -10,10 +10,6 @@ body {
   min-height: 100%;
 }
 
-body {
-  background: #0b1630;
-}
-
 img {
   display: block;
   max-width: 100%;
@@ -27,17 +23,27 @@ img {
   overflow: hidden;
   width: 100%;
   min-height: 100svh;
+  background:
+    linear-gradient(90deg, rgba(196, 140, 178, 0.2), rgba(255, 255, 255, 0.06) 42%, rgba(212, 140, 175, 0.16)),
+    radial-gradient(ellipse at 12% 55%, rgba(196, 140, 178, 0.18), rgba(196, 140, 178, 0) 42%),
+    radial-gradient(ellipse at 90% 38%, rgba(219, 130, 176, 0.16), rgba(219, 130, 176, 0) 42%);
+}
+
+.stage::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.22) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.22) 1px, transparent 1px);
+  background-size: 40px 40px;
+  opacity: 0.4;
 }
 
 .stage__bg {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center;
-  z-index: 0;
-  pointer-events: none;
+  display: none;
 }
 
 .stage__deco,
@@ -46,7 +52,7 @@ img {
 .stage__hujun,
 .stage__logos {
   position: absolute;
-  z-index: 1;
+  z-index: 2;
 }
 
 /* ========== 세로 정렬: 1024px 이하 또는 세로가 가로보다 긴 경우 ========== */
