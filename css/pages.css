@@ -261,6 +261,17 @@
   color: #e52f81;
 }
 
+.program-block__desc {
+  max-width: 40rem;
+  margin: 1rem auto 1.5rem;
+  font-family: var(--font-ui);
+  font-size: clamp(1.02rem, 1.7vw, 1.18rem);
+  font-weight: 500;
+  line-height: 1.75;
+  color: rgba(0, 64, 151, 0.78);
+  word-break: keep-all;
+}
+
 .program-block__meta {
   max-width: 44rem;
   margin: 0 auto 0.5rem;
@@ -304,8 +315,13 @@
   max-width: min(100%, 560px);
 }
 
+.program-block__poster--tall {
+  max-width: min(100%, 720px);
+}
+
 .program-block__poster img {
   width: 100%;
+  height: auto;
   border-radius: 1rem;
   box-shadow: 0 12px 32px rgba(40, 70, 110, 0.14);
 }
@@ -434,6 +450,19 @@
   font-size: 0.9em;
   font-weight: 600;
   line-height: 1.3;
+}
+
+.tt-cell__tags {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 0.35rem;
+  margin-top: 0.55rem;
+}
+
+.tt-cell__tags .tag {
+  margin: 0;
 }
 
 .tt-cell--sky {
