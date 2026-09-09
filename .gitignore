@@ -1,11 +1,7 @@
+node_modules/
 .DS_Store
-.DS_Store?
-._*
-.Spotlight-V100
-.Trashes
-Thumbs.db
-.env
-.env.*
+uploads/
+server/data/files/
 *.log
-.idea/
-.vscode/
+.env
+.cursor/

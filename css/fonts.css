@@ -1,0 +1,7 @@
+@font-face {
+  font-family: "MBC 1961 Gulim";
+  src: url("../fonts/MBC1961Gulim-M.ttf") format("truetype");
+  font-weight: 400 700;
+  font-style: normal;
+  font-display: swap;
+}

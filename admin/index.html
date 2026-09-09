@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>공지 관리 | 제24회 허준축제</title>
+    <link rel="stylesheet" href="../css/fonts.css" />
+    <link
+      rel="stylesheet"
+      as="style"
+      crossorigin
+      href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css"
+    />
+    <link rel="stylesheet" href="../css/common.css" />
+    <link rel="stylesheet" href="../css/admin.css" />
+  </head>
+  <body class="admin-page">
+    <main class="admin-shell">
+      <section id="admin-login" class="admin-card admin-card--narrow">
+        <h1 class="admin-card__title">관리자 로그인</h1>
+        <p class="admin-card__desc">
+          공지사항을 등록·수정·삭제합니다. Render의
+          <code>ADMIN_PASSWORD</code> 환경변수로 비밀번호를 설정하세요.
+        </p>
+        <form id="admin-login-form" class="admin-form">
+          <label class="admin-field">
+            <span>비밀번호</span>
+            <input
+              type="password"
+              id="admin-password"
+              required
+              autocomplete="current-password"
+            />
+          </label>
+          <p id="admin-login-error" class="admin-error" hidden></p>
+          <button type="submit" class="admin-btn admin-btn--primary">로그인</button>
+        </form>
+      </section>
+
+      <section id="admin-dashboard" class="admin-dashboard" hidden>
+        <header class="admin-top">
+          <div>
+            <h1 class="admin-top__title">공지사항 관리</h1>
+            <p class="admin-top__desc">
+              상단 고정, 이미지·문서·유튜브 첨부를 지원합니다.
+            </p>
+          </div>
+          <div class="admin-top__actions">
+            <a class="admin-btn admin-btn--ghost" href="../community/notice.html"
+              >게시판 보기</a
+            >
+            <button type="button" id="admin-logout" class="admin-btn admin-btn--ghost">
+              로그아웃
+            </button>
+          </div>
+        </header>
+
+        <div class="admin-grid">
+          <form id="admin-notice-form" class="admin-card admin-form">
+            <h2 class="admin-card__title">공지 작성</h2>
+            <input type="hidden" id="admin-notice-id" />
+
+            <label class="admin-field">
+              <span>제목</span>
+              <input type="text" id="admin-notice-title" required />
+            </label>
+
+            <label class="admin-field">
+              <span>날짜</span>
+              <input type="date" id="admin-notice-date" required />
+            </label>
+
+            <label class="admin-field">
+              <span>내용</span>
+              <textarea id="admin-notice-content" rows="10" required></textarea>
+              <span class="admin-field__hint"
+                >본문의 URL(http://, https://, www.)은 자동 링크됩니다.</span
+              >
+            </label>
+
+            <label class="admin-field">
+              <span>이미지 첨부</span>
+              <input
+                type="file"
+                id="admin-notice-images"
+                accept="image/*"
+                multiple
+              />
+              <div id="admin-image-preview" class="admin-attach-list"></div>
+              <span class="admin-field__hint">이미지당 최대 2MB</span>
+            </label>
+
+            <label class="admin-field">
+              <span>문서 첨부</span>
+              <input
+                type="file"
+                id="admin-notice-docs"
+                accept=".pdf,.doc,.docx,.hwp,.hwpx,.xls,.xlsx,.ppt,.pptx,.zip,.txt"
+                multiple
+              />
+              <div id="admin-doc-preview" class="admin-attach-list"></div>
+              <span class="admin-field__hint">문서당 최대 4MB</span>
+            </label>
+
+            <label class="admin-field">
+              <span>유튜브 링크</span>
+              <input
+                type="url"
+                id="admin-notice-youtube"
+                placeholder="https://www.youtube.com/watch?v=..."
+              />
+            </label>
+
+            <label class="admin-check">
+              <input type="checkbox" id="admin-notice-pinned" />
+              <span>상단 고정</span>
+            </label>
+
+            <div class="admin-form__actions">
+              <button
+                type="submit"
+                id="admin-notice-submit"
+                class="admin-btn admin-btn--primary"
+              >
+                공지 등록
+              </button>
+              <button
+                type="button"
+                id="admin-notice-reset"
+                class="admin-btn admin-btn--ghost"
+              >
+                새로 작성
+              </button>
+            </div>
+          </form>
+
+          <section class="admin-card">
+            <h2 class="admin-card__title">등록된 공지</h2>
+            <div id="admin-notice-list" class="admin-list"></div>
+          </section>
+        </div>
+      </section>
+    </main>
+
+    <script src="../js/api.js"></script>
+    <script src="../js/notice-store.js"></script>
+    <script src="../js/notice-admin.js"></script>
+  </body>
+</html>
