@@ -67,6 +67,8 @@
     adminUpload,
     getNotices: () => request("/api/notices"),
     getNotice: (id) => request("/api/notices/" + encodeURIComponent(id)),
+    fetchActivePopup: () =>
+      request("/api/popups/active").then((data) => data.popup || null),
     adminLogin: (password) =>
       request("/api/admin/login", {
         method: "POST",
@@ -84,6 +86,18 @@
       }),
     adminDeleteNotice: (id) =>
       adminRequest("/api/admin/notices/" + encodeURIComponent(id), {
+        method: "DELETE",
+      }),
+    adminListPopups: () => adminRequest("/api/admin/popups"),
+    adminCreatePopup: (body) =>
+      adminRequest("/api/admin/popups", { method: "POST", body }),
+    adminUpdatePopup: (id, body) =>
+      adminRequest("/api/admin/popups/" + encodeURIComponent(id), {
+        method: "PUT",
+        body,
+      }),
+    adminDeletePopup: (id) =>
+      adminRequest("/api/admin/popups/" + encodeURIComponent(id), {
         method: "DELETE",
       }),
   };

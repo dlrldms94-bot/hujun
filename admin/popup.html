@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>팝업 관리 | 제24회 허준축제</title>
+    <link rel="stylesheet" href="../css/fonts.css" />
+    <link
+      rel="stylesheet"
+      as="style"
+      crossorigin
+      href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css"
+    />
+    <link rel="stylesheet" href="../css/common.css" />
+    <link rel="stylesheet" href="../css/admin.css" />
+    <link rel="stylesheet" href="../css/popup.css" />
+  </head>
+  <body class="admin-page">
+    <main class="admin-shell">
+      <section id="admin-login" class="admin-card admin-card--narrow">
+        <h1 class="admin-card__title">관리자 로그인</h1>
+        <p class="admin-card__desc">
+          홈 화면 팝업을 등록·수정·삭제합니다. Render의
+          <code>ADMIN_PASSWORD</code> 환경변수로 비밀번호를 설정하세요.
+        </p>
+        <form id="admin-login-form" class="admin-form">
+          <label class="admin-field">
+            <span>비밀번호</span>
+            <input
+              type="password"
+              id="admin-password"
+              name="password"
+              required
+              autocomplete="current-password"
+            />
+          </label>
+          <p id="admin-login-error" class="admin-error" hidden></p>
+          <button type="submit" class="admin-btn admin-btn--primary">로그인</button>
+        </form>
+      </section>
+
+      <section id="admin-dashboard" class="admin-dashboard" hidden>
+        <header class="admin-top">
+          <div>
+            <h1 class="admin-top__title">홈 팝업 관리</h1>
+            <p class="admin-top__desc">
+              노출 중인 팝업은 1개만 표시됩니다. (노출 ON + 기간 내 · 최신 ID 우선)
+            </p>
+          </div>
+          <div class="admin-top__actions">
+            <button type="button" id="btn-new" class="admin-btn admin-btn--primary">
+              새 팝업
+            </button>
+            <a class="admin-btn admin-btn--ghost" href="./index.html">공지 관리</a>
+            <a class="admin-btn admin-btn--ghost" href="../main.html">홈으로</a>
+            <button type="button" id="admin-logout" class="admin-btn admin-btn--ghost">
+              로그아웃
+            </button>
+          </div>
+        </header>
+
+        <p class="popup-admin-hint">
+          이미지와 선택 링크·노출 기간을 설정하면 <code>main.html</code> 홈에서
+          팝업이 열립니다.
+        </p>
+
+        <section id="admin-list-section" class="admin-card">
+          <h2 class="admin-card__title">등록된 팝업</h2>
+          <div class="admin-table-wrap">
+            <table class="popup-admin-table">
+              <thead>
+                <tr>
+                  <th scope="col">번호</th>
+                  <th scope="col">이미지</th>
+                  <th scope="col">노출</th>
+                  <th scope="col">기간</th>
+                  <th scope="col">관리</th>
+                </tr>
+              </thead>
+              <tbody id="admin-popup-list"></tbody>
+            </table>
+          </div>
+          <p id="admin-list-empty" class="admin-empty" hidden>등록된 팝업이 없습니다.</p>
+        </section>
+
+        <section id="admin-editor-section" class="admin-card" hidden>
+          <h2 class="admin-card__title" id="editor-heading">팝업 작성</h2>
+          <form id="popup-form" class="admin-form">
+            <input type="hidden" id="popup-id" value="" />
+            <input type="hidden" id="popup-image-url" value="" />
+
+            <label class="admin-field">
+              <span>이미지</span>
+              <div class="popup-image-row">
+                <input type="file" id="popup-image-file" accept="image/*" />
+                <button
+                  type="button"
+                  id="btn-clear-image"
+                  class="admin-btn admin-btn--ghost"
+                  hidden
+                >
+                  이미지 제거
+                </button>
+              </div>
+              <span class="admin-field__hint">JPG, PNG · 2MB 이하</span>
+              <img
+                class="popup-admin-preview"
+                id="popup-image-preview"
+                alt=""
+                hidden
+              />
+            </label>
+
+            <label class="admin-field">
+              <span>링크 URL (선택)</span>
+              <input
+                type="url"
+                id="popup-link-url"
+                placeholder="https://"
+              />
+              <span class="admin-field__hint"
+                >입력 시 팝업 이미지를 클릭하면 해당 주소로 이동합니다.</span
+              >
+            </label>
+
+            <div class="popup-form-row">
+              <label class="admin-field">
+                <span>노출 시작일 (선택)</span>
+                <input type="date" id="popup-starts" />
+              </label>
+              <label class="admin-field">
+                <span>노출 종료일 (선택)</span>
+                <input type="date" id="popup-ends" />
+              </label>
+            </div>
+
+            <label class="admin-check">
+              <input type="checkbox" id="popup-enabled" />
+              <span>홈 화면에 노출</span>
+            </label>
+
+            <div class="admin-form__actions">
+              <button type="submit" class="admin-btn admin-btn--primary">저장</button>
+              <button
+                type="button"
+                id="btn-cancel"
+                class="admin-btn admin-btn--ghost"
+              >
+                취소
+              </button>
+            </div>
+          </form>
+        </section>
+      </section>
+    </main>
+
+    <script src="../js/api.js"></script>
+    <script src="../js/popup-admin.js"></script>
+  </body>
+</html>

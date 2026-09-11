@@ -154,6 +154,14 @@ app.get(
 );
 
 app.get(
+  "/api/popups/active",
+  handleAsync(async function (req, res) {
+    const popup = await db.getActivePopup();
+    res.json({ ok: true, popup });
+  })
+);
+
+app.get(
   "/api/admin/notices",
   requireAdmin,
   handleAsync(async function (req, res) {
@@ -233,6 +241,67 @@ app.delete(
   })
 );
 
+app.get(
+  "/api/admin/popups",
+  requireAdmin,
+  handleAsync(async function (req, res) {
+    res.json({ ok: true, popups: await db.listPopupsAdmin() });
+  })
+);
+
+app.post(
+  "/api/admin/popups",
+  requireAdmin,
+  handleAsync(async function (req, res) {
+    const popup = await db.createPopup({
+      title: String(req.body.title || "").trim(),
+      body: String(req.body.body || "").trim(),
+      imageUrl: String(req.body.imageUrl || "").trim(),
+      linkUrl: String(req.body.linkUrl || "").trim(),
+      linkLabel: String(req.body.linkLabel || "자세히 보기").trim(),
+      enabled: Boolean(req.body.enabled),
+      startsAt: String(req.body.startsAt || "").trim(),
+      endsAt: String(req.body.endsAt || "").trim(),
+    });
+    res.status(201).json({ ok: true, popup });
+  })
+);
+
+app.put(
+  "/api/admin/popups/:id",
+  requireAdmin,
+  handleAsync(async function (req, res) {
+    const popup = await db.updatePopup(req.params.id, {
+      title: String(req.body.title || "").trim(),
+      body: String(req.body.body || "").trim(),
+      imageUrl: String(req.body.imageUrl || "").trim(),
+      linkUrl: String(req.body.linkUrl || "").trim(),
+      linkLabel: String(req.body.linkLabel || "자세히 보기").trim(),
+      enabled: Boolean(req.body.enabled),
+      startsAt: String(req.body.startsAt || "").trim(),
+      endsAt: String(req.body.endsAt || "").trim(),
+    });
+
+    if (!popup) {
+      return res.status(404).json({ message: "팝업을 찾을 수 없습니다." });
+    }
+
+    res.json({ ok: true, popup });
+  })
+);
+
+app.delete(
+  "/api/admin/popups/:id",
+  requireAdmin,
+  handleAsync(async function (req, res) {
+    const deleted = await db.deletePopup(req.params.id);
+    if (!deleted) {
+      return res.status(404).json({ message: "팝업을 찾을 수 없습니다." });
+    }
+    res.json({ ok: true });
+  })
+);
+
 app.post("/api/admin/upload", requireAdmin, function (req, res) {
   upload.single("file")(req, res, function (error) {
     if (error) {
@@ -301,7 +370,8 @@ async function start() {
 
   app.listen(PORT, function () {
     console.log("제24회 허준축제 서버: http://localhost:" + PORT);
-    console.log("관리자: http://localhost:" + PORT + "/admin/");
+    console.log("공지 관리: http://localhost:" + PORT + "/admin/");
+    console.log("팝업 관리: http://localhost:" + PORT + "/admin/popup.html");
     console.log("DB:", db.isUsingJson() ? "JSON (local)" : "PostgreSQL");
   });
 }
