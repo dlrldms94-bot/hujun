@@ -61,7 +61,7 @@
       <img class="page-deco page-deco--bl" src="${base}img/deco-bot.png" alt="" width="33" height="294" />
       <img class="page-deco page-deco--br" src="${base}img/deco-bot.png" alt="" width="33" height="294" />
       <header class="site-header">
-        <a class="site-header__brand" href="${base}main.html">
+        <a class="site-header__brand" href="${base}index.html">
           <img src="${base}img/main-logo.png" alt="제24회 허준축제" width="1506" height="574" />
         </a>
         <button class="site-header__toggle" type="button" aria-expanded="false" aria-controls="site-menu" aria-label="메뉴 열기">
@@ -93,7 +93,7 @@
               .join("")}
           </ul>
         </nav>
-        <a class="site-header__gangseo" href="${base}main.html">
+        <a class="site-header__gangseo" href="${base}index.html">
           <img src="${base}img/logo.png" alt="함께 더하는 미래, 같이 나누는 강서" width="258" height="80" />
         </a>
       </header>
@@ -149,7 +149,7 @@
       <footer class="site-footer">
         <div class="site-footer__inner">
           <div class="site-footer__top">
-            <a class="site-footer__brand" href="${base}main.html">
+            <a class="site-footer__brand" href="${base}index.html">
               <img src="${base}img/main-logo.png" alt="제24회 허준축제" width="1506" height="574" />
             </a>
             <div class="site-footer__contact">

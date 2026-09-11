@@ -1,4 +1,4 @@
-/* main.html 전용 레이아웃 — 공통은 common.css */
+/* index.html 전용 레이아웃 — 공통은 common.css */
 
 /* 메인: 헤더를 히어로 위에 absolute */
 body.main-page .site-header {
@@ -118,15 +118,15 @@ body.main-page .site-header {
   left: calc(var(--side-gutter) + var(--deco-sq) + 1.75rem);
   bottom: var(--bottom-gutter);
   display: grid;
-  gap: 0.7rem;
+  gap: 0.55rem;
   width: max-content;
-  max-width: min(44vw, 440px);
+  max-width: min(38vw, 370px);
 }
 
 .main-hero__sponsor-row {
   display: flex;
   align-items: center;
-  gap: 0.8rem;
+  gap: 0.65rem;
 }
 
 .main-hero__sponsor-label {
@@ -134,14 +134,14 @@ body.main-page .site-header {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-width: 3.25rem;
-  height: 1.7rem;
-  padding: 0 0.65rem;
+  min-width: 2.9rem;
+  height: 1.5rem;
+  padding: 0 0.55rem;
   border-radius: 999px;
   background: #004097;
   color: #fff;
   font-family: var(--font-ui);
-  font-size: 0.84rem;
+  font-size: 0.76rem;
   font-weight: 700;
   letter-spacing: 0.02em;
   line-height: 1;
@@ -150,13 +150,13 @@ body.main-page .site-header {
 .main-hero__sponsor-group {
   display: flex;
   align-items: center;
-  gap: 1rem;
+  gap: 0.8rem;
   min-width: 0;
 }
 
 .main-hero__sponsors img {
   width: auto;
-  height: clamp(1.55rem, 2.4vw, 2.05rem);
+  height: clamp(1.35rem, 2.05vw, 1.75rem);
 }
 
 .main-hero__info {
@@ -323,9 +323,9 @@ body.main-page .site-header {
     flex-wrap: nowrap;
     align-items: center;
     justify-content: center;
-    gap: 0.45rem 0.65rem;
+    gap: 0.4rem 0.55rem;
     width: 100%;
-    max-width: min(96vw, 520px);
+    max-width: min(92vw, 450px);
   }
 
   .main-hero {
@@ -335,24 +335,24 @@ body.main-page .site-header {
   }
 
   .main-hero__sponsor-row {
-    gap: 0.35rem;
+    gap: 0.3rem;
     flex: 0 1 auto;
     min-width: 0;
   }
 
   .main-hero__sponsor-label {
-    min-width: 2.45rem;
-    height: 1.35rem;
-    font-size: 0.68rem;
-    padding: 0 0.4rem;
+    min-width: 2.25rem;
+    height: 1.25rem;
+    font-size: 0.64rem;
+    padding: 0 0.36rem;
   }
 
   .main-hero__sponsor-group {
-    gap: 0.4rem;
+    gap: 0.36rem;
   }
 
   .main-hero__sponsors img {
-    height: clamp(1.1rem, 3.6vw, 1.35rem);
+    height: clamp(1.05rem, 3.3vw, 1.25rem);
   }
 }
 
@@ -384,18 +384,18 @@ body.main-page .site-header {
   }
 
   .main-hero__sponsors {
-    gap: 0.35rem 0.45rem;
+    gap: 0.3rem 0.4rem;
     max-width: 100%;
   }
 
   .main-hero__sponsor-label {
-    min-width: 2.15rem;
-    height: 1.2rem;
-    font-size: 0.62rem;
+    min-width: 2rem;
+    height: 1.1rem;
+    font-size: 0.58rem;
   }
 
   .main-hero__sponsors img {
-    height: clamp(0.95rem, 3.8vw, 1.15rem);
+    height: clamp(0.9rem, 3.5vw, 1.08rem);
   }
 }
 

@@ -15,7 +15,7 @@
 - `https://hujun-web.onrender.com/api/health` → `{"ok":true,"db":"postgres"}`
 - 관리자: `https://hujun-web.onrender.com/admin/`
 - 팝업: `https://hujun-web.onrender.com/admin/popup.html`
-- 홈: `https://hujun-web.onrender.com/main.html`
+- 홈: `https://hujun-web.onrender.com/index.html`
 
 ## 3) 커스텀 도메인 (허준축제.com)
 

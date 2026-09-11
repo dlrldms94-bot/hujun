@@ -193,8 +193,8 @@ a {
 
 .site-header__list > li > a {
   display: block;
-  padding: 0.65rem 0.9rem;
-  font-size: clamp(0.92rem, 1.15vw, 1.05rem);
+  padding: 0.7rem 1rem;
+  font-size: clamp(1.08rem, 1.4vw, 1.28rem);
   font-weight: 700;
   color: var(--navy);
   white-space: nowrap;
@@ -214,8 +214,8 @@ a {
 
 .site-header__list ul a {
   display: block;
-  padding: 0.55rem 0.7rem;
-  font-size: 0.9rem;
+  padding: 0.55rem 0.75rem;
+  font-size: 1.02rem;
   font-weight: 500;
   color: var(--ink);
 }
@@ -362,7 +362,7 @@ a {
 
   .site-header__list > li > a {
     padding: 1rem 0.15rem;
-    font-size: clamp(1.2rem, 5.2vw, 1.45rem);
+    font-size: clamp(1.35rem, 5.6vw, 1.6rem);
     letter-spacing: -0.01em;
   }
 
@@ -394,7 +394,7 @@ a {
 
   .site-header__list ul a {
     padding: 0.45rem 0;
-    font-size: 0.95rem;
+    font-size: 1.08rem;
     color: rgba(0, 64, 151, 0.72);
     background: transparent;
   }
