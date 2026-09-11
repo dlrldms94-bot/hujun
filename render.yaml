@@ -1,12 +1,19 @@
+# Render Blueprint — https://render.com/docs/blueprint-spec
+# Node Web Service + PostgreSQL (공지·팝업 API용)
+# 기존 Static Site "hujun"과 이름 충돌을 피하기 위해 hujun-web 사용
+
 services:
   - type: web
-    name: hujun
+    name: hujun-web
     runtime: node
     plan: free
     buildCommand: npm install
     startCommand: npm start
+    healthCheckPath: /api/health
     autoDeploy: true
     envVars:
+      - key: NODE_VERSION
+        value: "20"
       - key: NODE_ENV
         value: production
       - key: ADMIN_PASSWORD
