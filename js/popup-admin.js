@@ -1,6 +1,6 @@
 (() => {
   const ADMIN_SESSION_KEY = "hujun_popup_admin_session";
-  const MAX_IMAGE_BYTES = 2 * 1024 * 1024;
+  const MAX_IMAGE_BYTES = 10 * 1024 * 1024;
 
   const loginSection = document.getElementById("admin-login");
   const dashboard = document.getElementById("admin-dashboard");
@@ -207,7 +207,7 @@
       return;
     }
     if (file.size > MAX_IMAGE_BYTES) {
-      alert("이미지는 2MB 이하여야 합니다.");
+      alert("이미지는 10MB 이하여야 합니다.");
       imageFileInput.value = "";
       return;
     }

@@ -10,8 +10,8 @@ const ROOT = path.join(__dirname, "..");
 const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || "hujun2026";
 const SESSION_MS = 8 * 60 * 60 * 1000;
 const TOKEN_PREFIX = "v1.";
-const MAX_IMAGE_BYTES = 2 * 1024 * 1024;
-const MAX_DOC_BYTES = 4 * 1024 * 1024;
+const MAX_IMAGE_BYTES = 10 * 1024 * 1024;
+const MAX_DOC_BYTES = 10 * 1024 * 1024;
 
 const upload = multer({
   storage: multer.memoryStorage(),
@@ -320,13 +320,13 @@ app.post("/api/admin/upload", requireAdmin, function (req, res) {
     if (isImage && req.file.size > MAX_IMAGE_BYTES) {
       return res
         .status(400)
-        .json({ message: "이미지는 2MB 이하만 업로드할 수 있습니다." });
+        .json({ message: "이미지는 10MB 이하만 업로드할 수 있습니다." });
     }
 
     if (!isImage && req.file.size > MAX_DOC_BYTES) {
       return res
         .status(400)
-        .json({ message: "문서는 4MB 이하만 업로드할 수 있습니다." });
+        .json({ message: "문서는 10MB 이하만 업로드할 수 있습니다." });
     }
 
     if (kind === "image" && !/^image\//.test(req.file.mimetype)) {
