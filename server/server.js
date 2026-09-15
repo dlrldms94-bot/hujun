@@ -156,8 +156,12 @@ app.get(
 app.get(
   "/api/popups/active",
   handleAsync(async function (req, res) {
-    const popup = await db.getActivePopup();
-    res.json({ ok: true, popup });
+    const popups = await db.getActivePopups(2);
+    res.json({
+      ok: true,
+      popups: popups,
+      popup: popups[0] || null,
+    });
   })
 );
 

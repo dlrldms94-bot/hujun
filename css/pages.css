@@ -229,6 +229,12 @@
   text-align: center;
 }
 
+.program-block + .program-block {
+  margin-top: clamp(3rem, 6vw, 4.5rem);
+  padding-top: clamp(2.5rem, 5vw, 3.5rem);
+  border-top: 1px solid rgba(0, 64, 151, 0.12);
+}
+
 .program-block__title {
   display: inline-flex;
   align-items: center;

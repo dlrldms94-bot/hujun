@@ -487,13 +487,19 @@ async function getPopup(id) {
 }
 
 async function getActivePopup() {
+  const popups = await getActivePopups(1);
+  return popups[0] || null;
+}
+
+async function getActivePopups(limit) {
+  const max = Math.max(1, Number(limit) || 2);
   const today = new Date().toISOString().slice(0, 10);
   const list = await listPopupsAdmin();
-  return (
-    list.find(function (popup) {
+  return list
+    .filter(function (popup) {
       return popup.enabled && isPopupInRange(popup, today);
-    }) || null
-  );
+    })
+    .slice(0, max);
 }
 
 async function createPopup(payload) {
@@ -614,6 +620,7 @@ module.exports = {
   listPopupsAdmin,
   getPopup,
   getActivePopup,
+  getActivePopups,
   createPopup,
   updatePopup,
   deletePopup,

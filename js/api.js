@@ -69,6 +69,14 @@
     getNotice: (id) => request("/api/notices/" + encodeURIComponent(id)),
     fetchActivePopup: () =>
       request("/api/popups/active").then((data) => data.popup || null),
+    fetchActivePopups: () =>
+      request("/api/popups/active").then((data) =>
+        Array.isArray(data.popups)
+          ? data.popups
+          : data.popup
+            ? [data.popup]
+            : []
+      ),
     adminLogin: (password) =>
       request("/api/admin/login", {
         method: "POST",

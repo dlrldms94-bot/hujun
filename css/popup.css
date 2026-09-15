@@ -15,28 +15,52 @@ body.popup-open {
   align-items: center;
   justify-content: center;
   padding: clamp(12px, 3vw, 24px);
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
 .site-popup__backdrop {
-  position: absolute;
+  position: fixed;
   inset: 0;
   background: rgba(15, 23, 42, 0.55);
 }
 
-.site-popup__dialog {
-  --popup-max-w: min(720px, calc(100vw - 24px));
+.site-popup__stage {
   position: relative;
   z-index: 1;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  gap: clamp(12px, 2vw, 20px);
+  width: min(100%, 980px);
+  margin: auto;
+}
+
+.site-popup--single .site-popup__stage {
+  width: min(100%, 720px);
+}
+
+.site-popup__dialog {
+  --popup-max-w: min(470px, calc(50vw - 28px));
+  position: relative;
+  flex: 0 1 auto;
   width: var(--popup-max-w);
-  max-height: min(92dvh, 1080px);
+  max-width: var(--popup-max-w);
+  height: auto;
   display: flex;
   flex-direction: column;
   background: #fff;
   border-radius: clamp(14px, 2vw, 20px);
   box-shadow: 0 24px 64px rgba(15, 23, 42, 0.22);
-  overflow-x: hidden;
-  overflow-y: auto;
-  -webkit-overflow-scrolling: touch;
+  overflow: hidden;
+}
+
+.site-popup--single .site-popup__dialog {
+  --popup-max-w: min(720px, calc(100vw - 24px));
+}
+
+.site-popup__dialog[hidden] {
+  display: none !important;
 }
 
 .site-popup__dialog--has-image .site-popup__close {
@@ -46,23 +70,22 @@ body.popup-open {
 
 .site-popup__close {
   position: absolute;
-  top: clamp(10px, 2vw, 14px);
-  right: clamp(10px, 2vw, 14px);
+  top: 0.55rem;
+  right: 0.55rem;
   z-index: 2;
-  width: clamp(40px, 8vw, 44px);
-  height: clamp(40px, 8vw, 44px);
+  width: 2rem;
+  height: 2rem;
   border: none;
   border-radius: 50%;
   background: rgba(255, 255, 255, 0.92);
   color: var(--navy);
-  font-size: clamp(22px, 4vw, 26px);
+  font-size: 1.15rem;
   line-height: 1;
   cursor: pointer;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
 }
 
 .site-popup__image-wrap {
-  flex-shrink: 0;
   width: 100%;
   line-height: 0;
   background: #f4f6fa;
@@ -77,6 +100,7 @@ body.popup-open {
   width: 100%;
   height: auto;
   max-width: 100%;
+  object-fit: contain;
   vertical-align: top;
 }
 
@@ -96,14 +120,11 @@ body.popup-open {
 
 .site-popup__footer {
   flex-shrink: 0;
-  position: sticky;
-  bottom: 0;
-  z-index: 1;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: clamp(10px, 2vw, 16px);
-  padding: clamp(12px, 2.5vw, 18px) clamp(16px, 3vw, 28px) clamp(14px, 2.5vw, 22px);
+  gap: clamp(8px, 2vw, 12px);
+  padding: 0.55rem 0.85rem 0.6rem;
   border-top: 1px solid rgba(0, 64, 151, 0.12);
   background: #fafbfd;
 }
@@ -111,30 +132,30 @@ body.popup-open {
 .site-popup__dismiss {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
   font-family: var(--font-ui);
-  font-size: clamp(13px, 2.5vw, 15px);
+  font-size: clamp(12px, 2.3vw, 13px);
   color: rgba(0, 64, 151, 0.7);
   cursor: pointer;
   user-select: none;
 }
 
 .site-popup__dismiss input {
-  width: clamp(16px, 3.5vw, 18px);
-  height: clamp(16px, 3.5vw, 18px);
+  width: 15px;
+  height: 15px;
   accent-color: var(--navy);
 }
 
 .site-popup__confirm {
-  min-width: clamp(88px, 22vw, 120px);
-  min-height: clamp(44px, 8vw, 48px);
-  padding: 0.55rem 1.1rem;
+  min-width: 4.25rem;
+  min-height: 2rem;
+  padding: 0.28rem 0.75rem;
   border: 1px solid rgba(0, 64, 151, 0.18);
   border-radius: 999px;
   background: #fff;
   color: var(--navy);
   font-family: var(--font-ui);
-  font-size: clamp(14px, 2.5vw, 16px);
+  font-size: 0.82rem;
   font-weight: 700;
   cursor: pointer;
 }
@@ -143,15 +164,68 @@ body.popup-open {
   background: rgba(232, 243, 250, 0.95);
 }
 
+@media (max-width: 900px) {
+  .site-popup__stage {
+    width: min(100%, 860px);
+  }
+
+  .site-popup__dialog {
+    --popup-max-w: min(400px, calc(50vw - 22px));
+  }
+}
+
 @media (max-width: 768px) {
   .site-popup {
     align-items: center;
     padding: 12px;
   }
 
-  .site-popup__dialog {
+  .site-popup__stage {
+    width: min(100%, 440px);
+  }
+
+  .site-popup--single .site-popup__stage,
+  .site-popup__dialog,
+  .site-popup--single .site-popup__dialog {
     --popup-max-w: min(100%, calc(100vw - 24px));
-    max-height: min(94dvh, 920px);
+    width: var(--popup-max-w);
+    max-width: var(--popup-max-w);
+  }
+
+  .site-popup__dialog {
+    height: auto;
+  }
+
+  /* 모바일 2개: 세로 나열 대신 살짝 어긋나며 겹침 */
+  .site-popup--multi .site-popup__stage {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas: "stack";
+    align-items: start;
+    justify-items: stretch;
+    width: min(100%, 400px);
+    overflow: visible;
+    padding: 0 14px 36px 0;
+    gap: 0;
+  }
+
+  .site-popup--multi .site-popup__dialog {
+    grid-area: stack;
+    width: 100%;
+    max-width: 100%;
+    --popup-max-w: 100%;
+    height: auto;
+    margin: 0;
+  }
+
+  .site-popup--multi .site-popup__dialog:nth-child(1) {
+    z-index: 1;
+    transform: translate(0, 0);
+  }
+
+  .site-popup--multi .site-popup__dialog:nth-child(2) {
+    z-index: 2;
+    transform: translate(12px, 28px);
   }
 }
 
@@ -160,26 +234,43 @@ body.popup-open {
     padding: 10px;
   }
 
+  .site-popup__stage {
+    width: 100%;
+  }
+
+  .site-popup--multi .site-popup__stage {
+    width: 100%;
+    padding: 0 12px 32px 0;
+  }
+
+  .site-popup--multi .site-popup__dialog:nth-child(2) {
+    transform: translate(10px, 24px);
+  }
+
   .site-popup__dialog {
     --popup-max-w: 100%;
     width: 100%;
-    max-height: 94dvh;
     border-radius: 14px;
   }
 
   .site-popup__footer {
-    flex-direction: column;
-    align-items: stretch;
+    flex-direction: row;
+    align-items: center;
+    padding: 0.45rem 0.7rem 0.5rem;
   }
 
   .site-popup__dismiss {
-    order: 2;
-    justify-content: center;
+    order: 0;
+    justify-content: flex-start;
   }
 
   .site-popup__confirm {
-    order: 1;
-    width: 100%;
+    order: 0;
+    width: auto;
+    min-width: 3.75rem;
+    min-height: 1.85rem;
+    padding: 0.22rem 0.65rem;
+    font-size: 0.78rem;
   }
 }
 
@@ -189,7 +280,7 @@ body.popup-open {
   }
 
   .site-popup__footer {
-    padding-inline: 16px;
+    padding-inline: 14px;
   }
 }
 
