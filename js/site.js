@@ -249,7 +249,7 @@
       <img class="page-deco page-deco--br" src="${base}img/deco-bot.png" alt="" width="33" height="294" />
       <header class="site-header">
         <a class="site-header__brand" href="${isEn ? `${enRoot}index.html` : HOME_URL}">
-          <img src="${base}img/main-logo.png" alt="${
+          <img src="${base}img/${isEn ? "main-logo-en.png" : "main-logo.png"}" alt="${
             isEn ? "The 24th Heojun Festival" : "제24회 허준축제"
           }" width="1506" height="574" />
         </a>
@@ -385,7 +385,7 @@
         <div class="site-footer__inner">
           <div class="site-footer__top">
             <a class="site-footer__brand" href="${enRoot}index.html">
-              <img src="${base}img/main-logo.png" alt="The 24th Heojun Festival" width="1506" height="574" />
+              <img src="${base}img/main-logo-en.png" alt="The 24th Heojun Festival" width="1506" height="574" />
             </a>
             <div class="site-footer__contact">
               <p>Address: 161 Magokdong-ro, Gangseo-gu, Seoul, Seoul Botanic Park</p>
