@@ -193,7 +193,9 @@
     event.preventDefault();
     const payload = {
       title: document.getElementById("admin-notice-title").value,
+      titleEn: document.getElementById("admin-notice-title-en").value,
       content: document.getElementById("admin-notice-content").value,
+      contentEn: document.getElementById("admin-notice-content-en").value,
       createdAt: document.getElementById("admin-notice-date").value,
       pinned: document.getElementById("admin-notice-pinned").checked,
       youtubeUrl: document.getElementById("admin-notice-youtube").value,
@@ -244,7 +246,11 @@
           editingId = post.id;
           document.getElementById("admin-notice-id").value = post.id;
           document.getElementById("admin-notice-title").value = post.title;
+          document.getElementById("admin-notice-title-en").value =
+            post.titleEn || "";
           document.getElementById("admin-notice-content").value = post.content;
+          document.getElementById("admin-notice-content-en").value =
+            post.contentEn || "";
           document.getElementById("admin-notice-date").value = String(
             post.createdAt
           ).slice(0, 10);

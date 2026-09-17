@@ -4,6 +4,12 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>참여프로그램 | 제24회 허준축제</title>
+    <link rel="alternate" hreflang="ko" href="participate.html" />
+    <link
+      rel="alternate"
+      hreflang="en"
+      href="../en/program/participate.html"
+    />
     <link rel="stylesheet" href="../css/fonts.css" />
     <link
       rel="stylesheet"
@@ -37,73 +43,245 @@
       </header>
 
       <div class="page-body">
-        <section class="program-block">
-          <h2 class="program-block__title">
-            <span class="program-block__num" aria-hidden="true">1</span>
-            허준 퍼레이드
-          </h2>
-          <p class="program-block__lead">시민과 함께 만드는 허준 퍼레이드</p>
-
-          <div class="program-block__meta">
-            <p>일시 : 2026년 10월 11일(일) 13:00~14:00</p>
-            <p class="page-body__note">
-              * 사전 접수는 10월 11일(일) 참여자에 한하여 받습니다.
-            </p>
-            <p>장소 : 서울식물원 진입광장 조선시대 의상체험 부스</p>
-          </div>
-
-          <figure class="program-block__poster">
-            <img
-              src="../img/Parade.png"
-              alt="제24회 허준축제 허준 퍼레이드"
-              width="1200"
-              height="1697"
-            />
-          </figure>
-
-          <div class="program-block__actions">
-            <a class="btn-cta" href="https://naver.me/5o0pkAaQ" target="_blank" rel="noopener noreferrer">신청하러가기</a>
-          </div>
-        </section>
-
-        <section class="program-block">
-          <h2 class="program-block__title">
-            <span class="program-block__num" aria-hidden="true">2</span>
-            허준 키즈 장원전
-          </h2>
-          <p class="program-block__lead">허준 꿈나무가 되어보는 허준 키즈 장원전</p>
-
-          <div class="program-block__meta">
-            <p>일시 : 2026년 10월 11일(일) 15:00~16:30</p>
-            <p class="page-body__note">
-              * 사전 접수는 10월 11일(일) 참여자에 한하여 받습니다.
-            </p>
-            <p>장소 : 서울식물원 잔디마당 메인무대</p>
-          </div>
-
-          <figure class="program-block__poster">
-            <img
-              src="../img/quiz.png"
-              alt="제24회 허준축제 허준 키즈 장원전"
-              width="2481"
-              height="3508"
-            />
-          </figure>
-
-          <div class="program-block__actions">
-            <a
-              class="btn-cta"
-              href="https://naver.me/xvC4ChHr"
-              target="_blank"
-              rel="noopener noreferrer"
-              >신청하러가기</a
+        <div class="program-tabs" data-program-tabs>
+          <div
+            class="program-tabs__list"
+            role="tablist"
+            aria-label="참여 프로그램 목록"
+          >
+            <button
+              type="button"
+              class="program-tabs__btn is-active"
+              role="tab"
+              id="tab-parade"
+              aria-controls="panel-parade"
+              aria-selected="true"
+              data-tab="parade"
             >
+              <span class="program-tabs__num" aria-hidden="true">1</span>
+              허준 퍼레이드
+            </button>
+            <button
+              type="button"
+              class="program-tabs__btn"
+              role="tab"
+              id="tab-quiz"
+              aria-controls="panel-quiz"
+              aria-selected="false"
+              tabindex="-1"
+              data-tab="quiz"
+            >
+              <span class="program-tabs__num" aria-hidden="true">2</span>
+              허준 키즈 장원전
+            </button>
+            <button
+              type="button"
+              class="program-tabs__btn"
+              role="tab"
+              id="tab-games"
+              aria-controls="panel-games"
+              aria-selected="false"
+              tabindex="-1"
+              data-tab="games"
+            >
+              <span class="program-tabs__num" aria-hidden="true">3</span>
+              참여 이벤트
+            </button>
           </div>
-        </section>
+
+          <div class="program-tabs__panels">
+            <section
+              class="program-block program-tabs__panel is-active"
+              role="tabpanel"
+              id="panel-parade"
+              aria-labelledby="tab-parade"
+              data-panel="parade"
+            >
+              <h2 class="program-block__title">
+                <span class="program-block__num" aria-hidden="true">1</span>
+                허준 퍼레이드
+              </h2>
+              <p class="program-block__lead">시민과 함께 만드는 허준 퍼레이드</p>
+
+              <div class="program-block__meta">
+                <p>일시 : 2026년 10월 11일(일) 13:00~14:00</p>
+                <p class="page-body__note">
+                  * 사전 접수는 10월 11일(일) 참여자에 한하여 받습니다.
+                </p>
+                <p>장소 : 서울식물원 진입광장 조선시대 의상체험 부스</p>
+              </div>
+
+              <figure class="program-block__poster">
+                <img
+                  src="../img/program/Participation/1/Parade.png"
+                  alt="제24회 허준축제 허준 퍼레이드"
+                  width="1200"
+                  height="1697"
+                />
+              </figure>
+
+              <div class="program-block__actions">
+                <a
+                  class="btn-cta"
+                  href="https://naver.me/5o0pkAaQ"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  >신청하러가기</a
+                >
+              </div>
+            </section>
+
+            <section
+              class="program-block program-tabs__panel"
+              role="tabpanel"
+              id="panel-quiz"
+              aria-labelledby="tab-quiz"
+              data-panel="quiz"
+              hidden
+            >
+              <h2 class="program-block__title">
+                <span class="program-block__num" aria-hidden="true">2</span>
+                허준 키즈 장원전
+              </h2>
+              <p class="program-block__lead">
+                허준 꿈나무가 되어보는 허준 키즈 장원전
+              </p>
+
+              <div class="program-block__meta">
+                <p>일시 : 2026년 10월 11일(일) 15:00~16:30</p>
+                <p class="page-body__note">
+                  * 사전 접수는 10월 11일(일) 참여자에 한하여 받습니다.
+                </p>
+                <p>장소 : 서울식물원 잔디마당 메인무대</p>
+              </div>
+
+              <figure class="program-block__poster">
+                <img
+                  src="../img/program/Participation/2/quiz.png"
+                  alt="제24회 허준축제 허준 키즈 장원전"
+                  width="2481"
+                  height="3508"
+                />
+              </figure>
+
+              <div class="program-block__actions">
+                <a
+                  class="btn-cta"
+                  href="https://naver.me/xvC4ChHr"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  >신청하러가기</a
+                >
+              </div>
+            </section>
+
+            <section
+              class="program-block program-tabs__panel"
+              role="tabpanel"
+              id="panel-games"
+              aria-labelledby="tab-games"
+              data-panel="games"
+              hidden
+            >
+              <h2 class="program-block__title program-block__title--wrap">
+                <span class="program-block__num" aria-hidden="true">3</span>
+                <span>가족 오락관 · 서바이벌 게임 · 랜덤 플레이 댄스</span>
+              </h2>
+              <p class="program-block__lead program-block__lead--stack">
+                <span>누구나 참여하는 즐거운 시간</span>
+                <span>허준 축제를 즐기는 또 하나의 방법!</span>
+              </p>
+
+              <div class="program-block__meta">
+                <p>일시 : 2026년 10월 10일(토) ~ 11일(일)</p>
+                <p>장소 : 서울식물원 잔디마당 메인무대</p>
+              </div>
+
+              <div class="program-block__photos">
+                <figure class="program-block__photo">
+                  <img
+                    src="../img/program/Participation/3/survival.JPG"
+                    alt="허준 서바이벌 게임 현장"
+                    width="1200"
+                    height="800"
+                  />
+                </figure>
+                <figure class="program-block__photo">
+                  <img
+                    src="../img/program/Participation/3/dance.JPG"
+                    alt="랜덤플레이 댄스 현장"
+                    width="1200"
+                    height="800"
+                  />
+                </figure>
+              </div>
+
+              <h3 class="program-block__subtitle">행사 시간</h3>
+              <div class="program-event-table-wrap">
+                <table class="program-event-table">
+                  <thead>
+                    <tr>
+                      <th scope="col">10/10(토)</th>
+                      <th scope="col">10/11(일)</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <strong>12:00~12:30</strong> 가족오락관
+                      </td>
+                      <td>
+                        <strong>11:00~11:40</strong> 가족오락관
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <strong>12:30~13:00</strong> 허준 서바이벌 게임
+                      </td>
+                      <td>
+                        <strong>11:40~12:20</strong> 허준 서바이벌 게임
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <strong>13:00~13:30</strong> 도전! 랜덤플레이댄스
+                      </td>
+                      <td>
+                        <strong>12:20~13:00</strong> 도전! 랜덤플레이댄스
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <ul class="program-event-list">
+                <li>
+                  <strong>가족오락관</strong>
+                  <span
+                    >가족들과 함께 참여하는 게임 한마당 (참여인원
+                    제한)</span
+                  >
+                </li>
+                <li>
+                  <strong>허준 서바이벌 게임</strong>
+                  <span
+                    >누가 더 오래 살아남는지 겨루는 서바이벌 게임
+                    (참여인원 제한)</span
+                  >
+                </li>
+                <li>
+                  <strong>도전! 랜덤플레이댄스</strong>
+                  <span>플레이 되는 음악에 맞춰 단체 댄스 챌린지</span>
+                </li>
+              </ul>
+            </section>
+          </div>
+        </div>
       </div>
     </div>
 
     <div id="site-footer"></div>
     <script src="../js/site.js"></script>
+    <script src="../js/program-tabs.js"></script>
   </body>
 </html>

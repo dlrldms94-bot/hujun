@@ -8,6 +8,8 @@
       name="description"
       content="제24회 허준축제 — 2026. 10. 10.(토) ~ 10. 11.(일), 서울식물원 잔디마당 · 마곡광장 · 마곡중앙로 일대"
     />
+    <link rel="alternate" hreflang="ko" href="index.html" />
+    <link rel="alternate" hreflang="en" href="en/index.html" />
     <link rel="stylesheet" href="css/fonts.css" />
     <link
       rel="stylesheet"
@@ -73,14 +75,29 @@
           </ul>
         </nav>
 
-        <a class="site-header__gangseo" href="https://xn--9y5b9p53i3tk.com/">
-          <img
-            src="img/logo.png"
-            alt="함께 더하는 미래, 같이 나누는 강서"
-            width="258"
-            height="80"
-          />
-        </a>
+        <div class="site-header__aside">
+          <div class="site-lang" role="group" aria-label="언어 선택">
+            <a
+              class="site-lang__btn is-active"
+              href="index.html"
+              hreflang="ko"
+              lang="ko"
+              aria-current="page"
+              >KO</a
+            >
+            <a class="site-lang__btn" href="en/index.html" hreflang="en" lang="en"
+              >EN</a
+            >
+          </div>
+          <a class="site-header__gangseo" href="https://xn--9y5b9p53i3tk.com/">
+            <img
+              src="img/logo.png"
+              alt="함께 더하는 미래, 같이 나누는 강서"
+              width="258"
+              height="80"
+            />
+          </a>
+        </div>
       </header>
 
       <section class="main-hero" aria-label="메인 비주얼">
@@ -185,8 +202,8 @@
         </div>
         <div class="site-footer__bottom">
           <div class="site-footer__links">
-            <a href="#">개인정보처리방침</a>
-            <a href="#">이메일무단수집거부</a>
+            <a href="policy/privacy.html">개인정보처리방침</a>
+            <a href="policy/email.html">이메일무단수집거부</a>
           </div>
           <p class="site-footer__copy">© 제24회 허준축제. All rights reserved</p>
         </div>

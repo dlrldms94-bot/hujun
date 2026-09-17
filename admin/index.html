@@ -62,8 +62,13 @@
             <input type="hidden" id="admin-notice-id" />
 
             <label class="admin-field">
-              <span>제목</span>
+              <span>제목 (한국어)</span>
               <input type="text" id="admin-notice-title" required />
+            </label>
+
+            <label class="admin-field">
+              <span>제목 (English)</span>
+              <input type="text" id="admin-notice-title-en" />
             </label>
 
             <label class="admin-field">
@@ -72,11 +77,16 @@
             </label>
 
             <label class="admin-field">
-              <span>내용</span>
+              <span>내용 (한국어)</span>
               <textarea id="admin-notice-content" rows="10" required></textarea>
               <span class="admin-field__hint"
                 >본문의 URL(http://, https://, www.)은 자동 링크됩니다.</span
               >
+            </label>
+
+            <label class="admin-field">
+              <span>내용 (English)</span>
+              <textarea id="admin-notice-content-en" rows="10"></textarea>
             </label>
 
             <label class="admin-field">

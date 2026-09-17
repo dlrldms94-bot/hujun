@@ -3,52 +3,238 @@
   const segs = location.pathname.split("/").filter(Boolean);
   const file = segs[segs.length - 1] || "index.html";
   const dir = segs[segs.length - 2] || "";
-  const subdirs = new Set(["festival", "program", "intro", "community", "directions"]);
-  const base = subdirs.has(dir) ? "../" : "./";
+  const isEn = segs[0] === "en";
+  const sectionDir = isEn ? segs[1] || "" : dir;
+  const subdirs = new Set([
+    "festival",
+    "program",
+    "intro",
+    "community",
+    "directions",
+    "policy",
+  ]);
+  const depth = isEn
+    ? subdirs.has(sectionDir)
+      ? 2
+      : 1
+    : subdirs.has(dir)
+      ? 1
+      : 0;
+  const base = depth === 0 ? "./" : "../".repeat(depth);
+  const enRoot = `${base}en/`;
+  const koRoot = base;
 
-  const items = [
-    {
-      label: "허준축제",
-      href: `${base}festival/timetable.html`,
-      match: "/festival/",
-      children: [
-        { label: "타임테이블", href: `${base}festival/timetable.html`, file: "timetable.html" },
-        { label: "축제장소", href: `${base}festival/place.html`, file: "place.html" },
-      ],
-    },
-    {
-      label: "축제프로그램",
-      href: `${base}program/opening.html`,
-      match: "/program/",
-      children: [
-        { label: "개막식 & 허준콘서트", href: `${base}program/opening.html`, file: "opening.html" },
-        { label: "허준 음악회", href: `${base}program/music.html`, file: "music.html" },
-        { label: "강서구 문화예술단체 공연", href: `${base}program/arts.html`, file: "arts.html" },
-        { label: "전시 및 체험", href: `${base}program/exhibition.html`, file: "exhibition.html" },
-        { label: "참여프로그램", href: `${base}program/participate.html`, file: "participate.html" },
-        { label: "기타 프로그램", href: `${base}program/other.html`, file: "other.html" },
-      ],
-    },
-    {
-      label: "인트로 축제",
-      href: `${base}intro/index.html`,
-      match: "/intro/",
-    },
-    {
-      label: "커뮤니티",
-      href: `${base}community/notice.html`,
-      match: "/community/",
-      children: [
-        { label: "공지사항", href: `${base}community/notice.html`, file: "notice.html" },
-        { label: "FAQ", href: `${base}community/faq.html`, file: "faq.html" },
-      ],
-    },
-    {
-      label: "오시는길",
-      href: `${base}directions/index.html`,
-      match: "/directions/",
-    },
-  ];
+  const enReady = new Set([
+    "index.html",
+    "festival/timetable.html",
+    "festival/place.html",
+    "program/opening.html",
+    "program/music.html",
+    "program/arts.html",
+    "program/participate.html",
+    "program/exhibition.html",
+    "program/other.html",
+    "intro/index.html",
+    "community/faq.html",
+    "community/notice.html",
+    "community/notice-view.html",
+    "directions/index.html",
+  ]);
+
+  const pageKey = (() => {
+    if (isEn) {
+      if (!subdirs.has(sectionDir)) return "index.html";
+      return `${sectionDir}/${file}`;
+    }
+    if (!subdirs.has(dir)) return file === "index.html" || !file ? "index.html" : file;
+    return `${dir}/${file}`;
+  })();
+
+  const koHref = (() => {
+    if (pageKey === "index.html") return `${koRoot}index.html`;
+    if (pageKey.includes("/")) return `${koRoot}${pageKey}`;
+    return `${koRoot}${pageKey}`;
+  })();
+
+  const enHref = (() => {
+    if (enReady.has(pageKey)) {
+      return pageKey === "index.html"
+        ? `${enRoot}index.html`
+        : `${enRoot}${pageKey}`;
+    }
+    return `${enRoot}index.html`;
+  })();
+
+  const langSearch =
+    file === "notice-view.html" ? location.search || "" : "";
+
+  const items = isEn
+    ? [
+        {
+          label: "HEOJUN FESTA",
+          href: `${enRoot}festival/timetable.html`,
+          match: "/festival/",
+          children: [
+            {
+              label: "Timetable",
+              href: `${enRoot}festival/timetable.html`,
+              file: "timetable.html",
+            },
+            {
+              label: "Festa Venue",
+              href: `${enRoot}festival/place.html`,
+              file: "place.html",
+            },
+          ],
+        },
+        {
+          label: "Program",
+          href: `${enRoot}program/opening.html`,
+          match: "/program/",
+          children: [
+            {
+              label: "Opening & Heojun Concert",
+              href: `${enRoot}program/opening.html`,
+              file: "opening.html",
+            },
+            {
+              label: "Heojun Music Concert",
+              href: `${enRoot}program/music.html`,
+              file: "music.html",
+            },
+            {
+              label: "Gangseo Cultural Arts Performances",
+              href: `${enRoot}program/arts.html`,
+              file: "arts.html",
+            },
+            {
+              label: "Exhibition & Experience",
+              href: `${enRoot}program/exhibition.html`,
+              file: "exhibition.html",
+            },
+            {
+              label: "Participation Programs",
+              href: `${enRoot}program/participate.html`,
+              file: "participate.html",
+            },
+            {
+              label: "Other Programs",
+              href: `${enRoot}program/other.html`,
+              file: "other.html",
+            },
+          ],
+        },
+        {
+          label: "HEOJUN Intro Festa",
+          href: `${enRoot}intro/index.html`,
+          match: "/intro/",
+        },
+        {
+          label: "Community",
+          href: `${enRoot}community/notice.html`,
+          match: "/community/",
+          children: [
+            {
+              label: "Notices",
+              href: `${enRoot}community/notice.html`,
+              file: "notice.html",
+            },
+            {
+              label: "FAQ",
+              href: `${enRoot}community/faq.html`,
+              file: "faq.html",
+            },
+          ],
+        },
+        {
+          label: "Directions",
+          href: `${enRoot}directions/index.html`,
+          match: "/directions/",
+        },
+      ]
+    : [
+        {
+          label: "허준축제",
+          href: `${base}festival/timetable.html`,
+          match: "/festival/",
+          children: [
+            {
+              label: "타임테이블",
+              href: `${base}festival/timetable.html`,
+              file: "timetable.html",
+            },
+            {
+              label: "축제장소",
+              href: `${base}festival/place.html`,
+              file: "place.html",
+            },
+          ],
+        },
+        {
+          label: "축제프로그램",
+          href: `${base}program/opening.html`,
+          match: "/program/",
+          children: [
+            {
+              label: "개막식 & 허준콘서트",
+              href: `${base}program/opening.html`,
+              file: "opening.html",
+            },
+            {
+              label: "허준 음악회",
+              href: `${base}program/music.html`,
+              file: "music.html",
+            },
+            {
+              label: "강서구 문화예술단체 공연",
+              href: `${base}program/arts.html`,
+              file: "arts.html",
+            },
+            {
+              label: "전시 및 체험",
+              href: `${base}program/exhibition.html`,
+              file: "exhibition.html",
+            },
+            {
+              label: "참여프로그램",
+              href: `${base}program/participate.html`,
+              file: "participate.html",
+            },
+            {
+              label: "기타 프로그램",
+              href: `${base}program/other.html`,
+              file: "other.html",
+            },
+          ],
+        },
+        {
+          label: "인트로 축제",
+          href: `${base}intro/index.html`,
+          match: "/intro/",
+        },
+        {
+          label: "커뮤니티",
+          href: `${base}community/notice.html`,
+          match: "/community/",
+          children: [
+            {
+              label: "공지사항",
+              href: `${base}community/notice.html`,
+              file: "notice.html",
+            },
+            {
+              label: "FAQ",
+              href: `${base}community/faq.html`,
+              file: "faq.html",
+            },
+          ],
+        },
+        {
+          label: "오시는길",
+          href: `${base}directions/index.html`,
+          match: "/directions/",
+        },
+      ];
 
   const path = location.pathname;
   const fileActive = (f) => f && file === f;
@@ -62,20 +248,30 @@
       <img class="page-deco page-deco--bl" src="${base}img/deco-bot.png" alt="" width="33" height="294" />
       <img class="page-deco page-deco--br" src="${base}img/deco-bot.png" alt="" width="33" height="294" />
       <header class="site-header">
-        <a class="site-header__brand" href="${HOME_URL}">
-          <img src="${base}img/main-logo.png" alt="제24회 허준축제" width="1506" height="574" />
+        <a class="site-header__brand" href="${isEn ? `${enRoot}index.html` : HOME_URL}">
+          <img src="${base}img/main-logo.png" alt="${
+            isEn ? "The 24th Heojun Festival" : "제24회 허준축제"
+          }" width="1506" height="574" />
         </a>
-        <button class="site-header__toggle" type="button" aria-expanded="false" aria-controls="site-menu" aria-label="메뉴 열기">
+        <button class="site-header__toggle" type="button" aria-expanded="false" aria-controls="site-menu" aria-label="${
+          isEn ? "Open menu" : "메뉴 열기"
+        }">
           <span></span><span></span><span></span><span></span><span></span>
         </button>
-        <nav class="site-header__nav" id="site-menu" aria-label="주요 메뉴">
+        <nav class="site-header__nav" id="site-menu" aria-label="${
+          isEn ? "Main menu" : "주요 메뉴"
+        }">
           <ul class="site-header__list">
             ${items
               .map((item) => {
-                const childActive = (item.children || []).some((c) => fileActive(c.file));
+                const childActive = (item.children || []).some((c) =>
+                  fileActive(c.file)
+                );
                 const active = sectionActive(item.match) || childActive;
                 return `
-                <li class="${item.children ? "has-sub" : ""} ${active ? "is-active" : ""}">
+                <li class="${item.children ? "has-sub" : ""} ${
+                  active ? "is-active" : ""
+                }">
                   <a href="${item.href}">${item.label}</a>
                   ${
                     item.children
@@ -83,7 +279,9 @@
                           ${item.children
                             .map(
                               (c) =>
-                                `<li><a class="${fileActive(c.file) ? "is-active" : ""}" href="${c.href}">${c.label}</a></li>`
+                                `<li><a class="${
+                                  fileActive(c.file) ? "is-active" : ""
+                                }" href="${c.href}">${c.label}</a></li>`
                             )
                             .join("")}
                         </ul>`
@@ -94,9 +292,35 @@
               .join("")}
           </ul>
         </nav>
-        <a class="site-header__gangseo" href="${HOME_URL}">
-          <img src="${base}img/logo.png" alt="함께 더하는 미래, 같이 나누는 강서" width="258" height="80" />
-        </a>
+        <div class="site-header__aside">
+          <div class="site-lang" role="group" aria-label="${
+            isEn ? "Language" : "언어 선택"
+          }">
+            <a
+              class="site-lang__btn${isEn ? "" : " is-active"}"
+              href="${koHref}${langSearch}"
+              hreflang="ko"
+              lang="ko"
+              ${isEn ? "" : 'aria-current="page"'}
+              >KO</a
+            >
+            <a
+              class="site-lang__btn${isEn ? " is-active" : ""}"
+              href="${enHref}${langSearch}"
+              hreflang="en"
+              lang="en"
+              ${isEn ? 'aria-current="page"' : ""}
+              >EN</a
+            >
+          </div>
+          <a class="site-header__gangseo" href="${HOME_URL}">
+            <img src="${base}img/logo.png" alt="${
+              isEn
+                ? "Gangseo — Creating the Future Together, Sharing Together"
+                : "함께 더하는 미래, 같이 나누는 강서"
+            }" width="258" height="80" />
+          </a>
+        </div>
       </header>
     `;
 
@@ -117,7 +341,16 @@
 
     const setOpen = (open) => {
       toggle?.setAttribute("aria-expanded", String(open));
-      toggle?.setAttribute("aria-label", open ? "메뉴 닫기" : "메뉴 열기");
+      toggle?.setAttribute(
+        "aria-label",
+        open
+          ? isEn
+            ? "Close menu"
+            : "메뉴 닫기"
+          : isEn
+            ? "Open menu"
+            : "메뉴 열기"
+      );
       menu?.classList.toggle("is-open", open);
       document.body.classList.toggle("nav-open", open);
       syncMenuInert(open);
@@ -146,7 +379,31 @@
 
   const footerMount = document.getElementById("site-footer");
   if (footerMount) {
-    footerMount.innerHTML = `
+    footerMount.innerHTML = isEn
+      ? `
+      <footer class="site-footer">
+        <div class="site-footer__inner">
+          <div class="site-footer__top">
+            <a class="site-footer__brand" href="${enRoot}index.html">
+              <img src="${base}img/main-logo.png" alt="The 24th Heojun Festival" width="1506" height="574" />
+            </a>
+            <div class="site-footer__contact">
+              <p>Address: 161 Magokdong-ro, Gangseo-gu, Seoul, Seoul Botanic Park</p>
+              <p>Main Inquiries: 02-2600-6455</p>
+            </div>
+            <img class="site-footer__logo" src="${base}img/logo-1.png" alt="Gangseo-gu" width="224" height="57" />
+          </div>
+          <div class="site-footer__bottom">
+            <div class="site-footer__links">
+              <a href="${koRoot}policy/privacy.html">Privacy Policy</a>
+              <a href="${koRoot}policy/email.html">Refusal to Collect Unauthorized Emails</a>
+            </div>
+            <p class="site-footer__copy">© The 24th Heojun Festival. All rights reserved</p>
+          </div>
+        </div>
+      </footer>
+    `
+      : `
       <footer class="site-footer">
         <div class="site-footer__inner">
           <div class="site-footer__top">
@@ -161,8 +418,8 @@
           </div>
           <div class="site-footer__bottom">
             <div class="site-footer__links">
-              <a href="#">개인정보처리방침</a>
-              <a href="#">이메일무단수집거부</a>
+              <a href="${base}policy/privacy.html">개인정보처리방침</a>
+              <a href="${base}policy/email.html">이메일무단수집거부</a>
             </div>
             <p class="site-footer__copy">© 제24회 허준축제. All rights reserved</p>
           </div>

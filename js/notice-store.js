@@ -54,8 +54,13 @@
     return item && item.url ? item.url : "";
   }
 
-  function renderContentHtml(post) {
-    const paragraphs = String(post.content || "")
+  function renderContentHtml(post, options) {
+    const lang = options && options.lang === "en" ? "en" : "ko";
+    const source =
+      lang === "en"
+        ? post.contentEn || post.content || ""
+        : post.content || "";
+    const paragraphs = String(source)
       .split(/\n{2,}/)
       .map((block) => {
         const lines = block

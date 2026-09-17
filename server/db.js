@@ -75,7 +75,9 @@ function mapNoticeRow(row) {
   return {
     id: row.id,
     title: row.title,
+    titleEn: row.title_en || row.titleEn || "",
     content: row.content,
+    contentEn: row.content_en || row.contentEn || "",
     createdAt: formatCreatedAt(row.created_at),
     pinned: Boolean(row.pinned),
     youtubeUrl: row.youtube_url || "",
@@ -96,6 +98,7 @@ function mapNoticePublic(notice) {
   return {
     id: notice.id,
     title: notice.title,
+    titleEn: notice.titleEn || "",
     createdAt: notice.createdAt,
     pinned: Boolean(notice.pinned),
   };
@@ -123,7 +126,9 @@ async function initDatabase() {
     CREATE TABLE IF NOT EXISTS notices (
       id SERIAL PRIMARY KEY,
       title TEXT NOT NULL,
+      title_en TEXT NOT NULL DEFAULT '',
       content TEXT NOT NULL,
+      content_en TEXT NOT NULL DEFAULT '',
       created_at DATE NOT NULL,
       pinned BOOLEAN NOT NULL DEFAULT FALSE,
       youtube_url TEXT NOT NULL DEFAULT '',
@@ -132,6 +137,13 @@ async function initDatabase() {
       updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
     )
   `);
+
+  await pool.query(
+    `ALTER TABLE notices ADD COLUMN IF NOT EXISTS title_en TEXT NOT NULL DEFAULT ''`
+  );
+  await pool.query(
+    `ALTER TABLE notices ADD COLUMN IF NOT EXISTS content_en TEXT NOT NULL DEFAULT ''`
+  );
 
   await pool.query(`
     CREATE TABLE IF NOT EXISTS files (
@@ -165,12 +177,14 @@ async function initDatabase() {
     const seed = readSeed();
     for (const notice of seed) {
       await pool.query(
-        `INSERT INTO notices (id, title, content, created_at, pinned, youtube_url, images, documents)
-         VALUES ($1, $2, $3, $4, $5, $6, $7::jsonb, $8::jsonb)`,
+        `INSERT INTO notices (id, title, title_en, content, content_en, created_at, pinned, youtube_url, images, documents)
+         VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9::jsonb, $10::jsonb)`,
         [
           notice.id,
           notice.title,
+          notice.titleEn || "",
           notice.content,
+          notice.contentEn || "",
           notice.createdAt,
           Boolean(notice.pinned),
           notice.youtubeUrl || "",
@@ -187,6 +201,18 @@ async function initDatabase() {
     console.log("[db] 초기 공지 시드 완료");
   }
 
+  const seedForEn = readSeed();
+  for (const notice of seedForEn) {
+    if (!notice.titleEn && !notice.contentEn) continue;
+    await pool.query(
+      `UPDATE notices
+       SET title_en = CASE WHEN COALESCE(title_en, '') = '' THEN $2 ELSE title_en END,
+           content_en = CASE WHEN COALESCE(content_en, '') = '' THEN $3 ELSE content_en END
+       WHERE id = $1`,
+      [notice.id, notice.titleEn || "", notice.contentEn || ""]
+    );
+  }
+
   console.log("[db] PostgreSQL 연결 완료");
 }
 
@@ -200,7 +226,7 @@ async function listNoticesPublic() {
   }
 
   const result = await pool.query(
-    "SELECT id, title, created_at, pinned FROM notices ORDER BY pinned DESC, created_at DESC, id DESC"
+    "SELECT id, title, title_en, created_at, pinned FROM notices ORDER BY pinned DESC, created_at DESC, id DESC"
   );
   return result.rows.map(function (row) {
     return mapNoticePublic(mapNoticeRow(row));
@@ -244,7 +270,9 @@ async function createNotice(data) {
           ) + 1
         : 1,
       title: data.title,
+      titleEn: data.titleEn || "",
       content: data.content,
+      contentEn: data.contentEn || "",
       createdAt: data.createdAt,
       pinned: Boolean(data.pinned),
       youtubeUrl: data.youtubeUrl || "",
@@ -257,12 +285,14 @@ async function createNotice(data) {
   }
 
   const result = await pool.query(
-    `INSERT INTO notices (title, content, created_at, pinned, youtube_url, images, documents)
-     VALUES ($1, $2, $3, $4, $5, $6::jsonb, $7::jsonb)
+    `INSERT INTO notices (title, title_en, content, content_en, created_at, pinned, youtube_url, images, documents)
+     VALUES ($1, $2, $3, $4, $5, $6, $7, $8::jsonb, $9::jsonb)
      RETURNING *`,
     [
       data.title,
+      data.titleEn || "",
       data.content,
+      data.contentEn || "",
       data.createdAt,
       Boolean(data.pinned),
       data.youtubeUrl || "",
@@ -283,7 +313,9 @@ async function updateNotice(id, data) {
     notices[index] = {
       id: notices[index].id,
       title: data.title,
+      titleEn: data.titleEn || "",
       content: data.content,
+      contentEn: data.contentEn || "",
       createdAt: data.createdAt,
       pinned: Boolean(data.pinned),
       youtubeUrl: data.youtubeUrl || "",
@@ -297,19 +329,23 @@ async function updateNotice(id, data) {
   const result = await pool.query(
     `UPDATE notices
      SET title = $2,
-         content = $3,
-         created_at = $4,
-         pinned = $5,
-         youtube_url = $6,
-         images = $7::jsonb,
-         documents = $8::jsonb,
+         title_en = $3,
+         content = $4,
+         content_en = $5,
+         created_at = $6,
+         pinned = $7,
+         youtube_url = $8,
+         images = $9::jsonb,
+         documents = $10::jsonb,
          updated_at = NOW()
      WHERE id = $1
      RETURNING *`,
     [
       id,
       data.title,
+      data.titleEn || "",
       data.content,
+      data.contentEn || "",
       data.createdAt,
       Boolean(data.pinned),
       data.youtubeUrl || "",

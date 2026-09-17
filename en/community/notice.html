@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Notice | The 24th Heojun Festa</title>
+    <link rel="alternate" hreflang="ko" href="../../community/notice.html" />
+    <link rel="alternate" hreflang="en" href="notice.html" />
+    <link rel="stylesheet" href="../../css/fonts.css" />
+    <link
+      rel="stylesheet"
+      as="style"
+      crossorigin
+      href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css"
+    />
+    <link rel="stylesheet" href="../../css/common.css" />
+    <link rel="stylesheet" href="../../css/pages.css" />
+  </head>
+  <body class="page page--en">
+    <div id="site-nav"></div>
+
+    <div class="page-shell">
+      <header class="page-head">
+        <div class="page-head__text">
+          <p class="page-head__badge">Community</p>
+          <h1 class="page-head__title">Notice</h1>
+          <p class="page-head__crumb">
+            <a href="../index.html">Home</a> &gt; Community &gt;
+            <span class="page-head__crumb-current">Announcements</span>
+          </p>
+        </div>
+        <img
+          class="page-head__mascot"
+          src="../../img/sub-hujun.png"
+          alt=""
+          width="512"
+          height="512"
+        />
+      </header>
+
+      <div class="page-body">
+        <div class="notice-table-wrap">
+          <table class="notice-table">
+            <thead>
+              <tr>
+                <th scope="col">Number</th>
+                <th scope="col">Title</th>
+                <th scope="col">Date</th>
+              </tr>
+            </thead>
+            <tbody id="notice-list"></tbody>
+          </table>
+          <p id="notice-empty" class="page-empty" hidden>
+            No notices have been registered.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div id="site-footer"></div>
+    <script src="../../js/site.js"></script>
+    <script src="../../js/api.js"></script>
+    <script src="../../js/notice-store.js"></script>
+    <script src="../../js/notice-list.js"></script>
+  </body>
+</html>

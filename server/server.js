@@ -178,7 +178,9 @@ app.post(
   requireAdmin,
   handleAsync(async function (req, res) {
     const title = String(req.body.title || "").trim();
+    const titleEn = String(req.body.titleEn || "").trim();
     const content = String(req.body.content || "").trim();
+    const contentEn = String(req.body.contentEn || "").trim();
     const createdAt = String(
       req.body.createdAt || formatDate(new Date())
     ).trim();
@@ -189,7 +191,9 @@ app.post(
 
     const notice = await db.createNotice({
       title: title,
+      titleEn: titleEn,
       content: content,
+      contentEn: contentEn,
       createdAt: createdAt,
       pinned: Boolean(req.body.pinned),
       youtubeUrl: String(req.body.youtubeUrl || "").trim(),
@@ -206,7 +210,9 @@ app.put(
   requireAdmin,
   handleAsync(async function (req, res) {
     const title = String(req.body.title || "").trim();
+    const titleEn = String(req.body.titleEn || "").trim();
     const content = String(req.body.content || "").trim();
+    const contentEn = String(req.body.contentEn || "").trim();
     const createdAt = String(
       req.body.createdAt || formatDate(new Date())
     ).trim();
@@ -217,7 +223,9 @@ app.put(
 
     const notice = await db.updateNotice(req.params.id, {
       title: title,
+      titleEn: titleEn,
       content: content,
+      contentEn: contentEn,
       createdAt: createdAt,
       pinned: Boolean(req.body.pinned),
       youtubeUrl: String(req.body.youtubeUrl || "").trim(),

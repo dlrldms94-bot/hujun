@@ -5,31 +5,41 @@
   const metaEl = document.getElementById("notice-view-meta");
   const contentEl = document.getElementById("notice-view-content");
   const errorEl = document.getElementById("notice-view-error");
+  const isEn = document.documentElement.lang === "en";
 
   if (!window.SiteApi || !window.NoticeUI || !titleEl || !contentEl) return;
 
   if (!id) {
     if (errorEl) {
       errorEl.hidden = false;
-      errorEl.textContent = "잘못된 접근입니다.";
+      errorEl.textContent = isEn
+        ? "Invalid access."
+        : "잘못된 접근입니다.";
     }
     return;
   }
 
   SiteApi.getNotice(id)
     .then((post) => {
-      titleEl.textContent = post.title;
+      const title =
+        isEn && post.titleEn ? post.titleEn : post.title || "";
+      titleEl.textContent = title;
       if (metaEl) {
+        const pin = isEn ? "Pinned" : "고정";
         metaEl.innerHTML = post.pinned
-          ? `<span class="notice-view__pin">고정</span><span>${NoticeUI.formatDate(post.createdAt)}</span>`
+          ? `<span class="notice-view__pin">${pin}</span><span>${NoticeUI.formatDate(post.createdAt)}</span>`
           : `<span>${NoticeUI.formatDate(post.createdAt)}</span>`;
       }
-      contentEl.innerHTML = NoticeUI.renderContentHtml(post);
+      contentEl.innerHTML = NoticeUI.renderContentHtml(post, {
+        lang: isEn ? "en" : "ko",
+      });
     })
     .catch(() => {
       if (errorEl) {
         errorEl.hidden = false;
-        errorEl.textContent = "게시글을 찾을 수 없습니다.";
+        errorEl.textContent = isEn
+          ? "Notice not found."
+          : "게시글을 찾을 수 없습니다.";
       }
     });
 })();
