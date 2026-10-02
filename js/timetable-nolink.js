@@ -1,6 +1,6 @@
 (() => {
   const roots = [
-    ...document.querySelectorAll(".timetable-wrap, .page-body__meta, .timetable"),
+    ...document.querySelectorAll(".timetable-wrap, .page-body__meta, .timetable, .tt-stage"),
   ];
   if (!roots.length) return;
 
@@ -38,7 +38,7 @@
     (event) => {
       const target = event.target;
       if (!(target instanceof Element)) return;
-      const inTable = target.closest(".timetable-wrap, .timetable, .page-body__meta");
+      const inTable = target.closest(".timetable-wrap, .timetable, .page-body__meta, .tt-stage");
       if (!inTable) return;
       const link = target.closest("a");
       if (link && inTable.contains(link)) {
@@ -55,7 +55,7 @@
     (event) => {
       const target = event.target;
       if (!(target instanceof Element)) return;
-      const inTable = target.closest(".timetable-wrap, .timetable, .page-body__meta");
+      const inTable = target.closest(".timetable-wrap, .timetable, .page-body__meta, .tt-stage");
       if (!inTable) return;
       const link = target.closest("a");
       if (link && inTable.contains(link)) {

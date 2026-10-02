@@ -881,17 +881,24 @@
   font-size: 0.95em;
 }
 
-.timetable__corner,
-.timetable__place {
-  background: #595959;
+.timetable--days {
+  min-width: 30rem;
+}
+
+.timetable--days .timetable__corner {
+  width: 8rem;
+}
+
+.timetable__corner {
+  background: #1d4fa3;
 }
 
 .timetable__day--1 {
-  background: #e52f81;
+  background: #2a74c4;
 }
 
 .timetable__day--2 {
-  background: #1262ae;
+  background: #7a5bb5;
 }
 
 .timetable tbody th {
@@ -915,55 +922,69 @@
   line-height: 1.3;
 }
 
-.tt-cell__tags {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: center;
-  gap: 0.35rem;
-  margin-top: 0.55rem;
+.timetable tbody td.tt-cell {
+  color: #1b3a86;
+  font-size: 1.02em;
 }
 
-.tt-cell__tags .tag {
+.timetable tbody td.tt-cell--blue {
+  background: #cfe6f2;
+}
+
+.timetable tbody td.tt-cell--pink {
+  background: #f8e1e4;
+}
+
+.timetable tbody td.tt-cell--break {
+  background: #dacdea;
+  color: #3e2b7d;
+}
+
+.timetable tbody td.tt-cell--gold {
+  background: #f4e4a6;
+}
+
+.tt-stage {
+  margin-top: 2rem;
+  font-family: var(--font-ui);
+}
+
+.tt-stage__title {
+  margin: 0 0 0.9rem;
+  color: #c2185b;
+  font-size: clamp(1.1rem, 2vw, 1.35rem);
+  font-weight: 800;
+}
+
+.tt-stage__list {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  gap: 0.6rem 1rem;
   margin: 0;
+  align-items: start;
 }
 
-.tt-cell--sky {
-  background: #c1e5f5;
+.tt-stage__list dt {
+  padding: 0.25rem 0.8rem;
+  border-radius: 0.3rem;
+  background: #f8d7de;
+  color: #c2185b;
+  font-weight: 800;
+  text-align: center;
 }
 
-.tt-cell--cyan {
-  background: #61cbf3;
-}
-
-.tt-cell--green {
-  background: #8ed974;
-}
-
-.tt-cell--violet {
-  background: #915bfb;
-  color: #fff;
-}
-
-.tt-cell--peach {
-  background: #f2aa84;
-}
-
-.tt-cell--grey {
-  background: #afafaf;
-}
-
-.tt-cell--yellow {
-  background: #ffff00;
-}
-
-.tt-cell--mute {
-  background: #f2f2f2;
-}
-
-.timetable__footer th,
-.timetable__footer td {
+.tt-stage__list dd {
+  margin: 0;
+  padding-top: 0.25rem;
+  color: #1b3a86;
   font-weight: 700;
+  line-height: 1.5;
+}
+
+.tt-stage__detail {
+  display: block;
+  font-size: 0.92em;
+  font-weight: 600;
 }
 
 .schedule {
@@ -1358,6 +1379,30 @@
   display: grid;
   place-items: center;
   font-family: var(--font-ui);
+  color: var(--ink-soft);
+}
+
+.place-map {
+  margin: 1.5rem 0 0;
+}
+
+.place-map a {
+  display: block;
+}
+
+.place-map img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 1rem;
+  box-shadow: 0 12px 32px rgba(40, 70, 110, 0.14);
+}
+
+.place-map figcaption {
+  margin-top: 0.75rem;
+  text-align: center;
+  font-family: var(--font-ui);
+  font-size: 0.88rem;
   color: var(--ink-soft);
 }
 
