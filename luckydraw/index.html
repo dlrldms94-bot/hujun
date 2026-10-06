@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex" />
+    <title>행운의 경품추첨 | 제24회 허준축제</title>
+    <link rel="stylesheet" href="../css/fonts.css" />
+    <link
+      rel="stylesheet"
+      as="style"
+      crossorigin
+      href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css"
+    />
+    <link rel="stylesheet" href="../css/luckydraw.css" />
+  </head>
+  <body class="ld-page">
+    <div class="ld-hero">
+      <main class="ld-main">
+        <h1 class="ld-logo">
+          <img
+            src="../img/main-logo.png"
+            alt="제24회 허준축제"
+            width="1506"
+            height="574"
+          />
+        </h1>
+        <p class="ld-title">행운의 경품추첨</p>
+
+        <div class="ld-reel-frame">
+          <div class="ld-reel-window">
+            <div class="ld-reel-highlight"></div>
+            <div class="ld-reel" id="reel"></div>
+          </div>
+        </div>
+
+        <p class="ld-status" id="drawStatus">추첨 준비 중</p>
+      </main>
+    </div>
+
+    <section class="ld-board" id="board" aria-label="당첨자 명단"></section>
+
+    <div class="ld-overlay" id="overlay">
+      <div class="ld-modal">
+        <div class="ld-modal__rank" id="overlayRank">당첨을 축하드립니다!</div>
+        <p class="ld-modal__item" id="overlayItem" hidden></p>
+        <ul class="ld-modal__winners" id="overlayWinners"></ul>
+      </div>
+    </div>
+    <canvas id="confetti" class="ld-confetti"></canvas>
+
+    <script type="module" src="../js/luckydraw-draw.js"></script>
+  </body>
+</html>

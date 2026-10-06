@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex" />
+    <title>경품추첨 관리 | 제24회 허준축제</title>
+    <link rel="stylesheet" href="../css/fonts.css" />
+    <link
+      rel="stylesheet"
+      as="style"
+      crossorigin
+      href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css"
+    />
+    <link rel="stylesheet" href="../css/common.css" />
+    <link rel="stylesheet" href="../css/admin.css" />
+    <link rel="stylesheet" href="../css/luckydraw.css" />
+  </head>
+  <body class="admin-page">
+    <main class="admin-shell">
+      <section id="admin-login" class="admin-card admin-card--narrow" hidden>
+        <h1 class="admin-card__title">관리자 로그인</h1>
+        <p class="admin-card__desc">공지·팝업 관리와 같은 관리자 비밀번호를 입력하세요.</p>
+        <form id="admin-login-form" class="admin-form">
+          <label class="admin-field">
+            <span>비밀번호</span>
+            <input
+              type="password"
+              id="admin-password"
+              required
+              autocomplete="current-password"
+            />
+          </label>
+          <p id="admin-login-error" class="admin-error" hidden></p>
+          <button type="submit" class="admin-btn admin-btn--primary">로그인</button>
+        </form>
+      </section>
+
+      <section id="admin-dashboard" class="admin-dashboard" hidden>
+        <header class="admin-top">
+          <div>
+            <h1 class="admin-top__title">행운의 경품추첨 관리</h1>
+            <p class="admin-top__desc">
+              큰 화면에는 <a href="./" target="_blank" rel="noopener">추첨 화면</a>을 띄우고, 이 화면에서 추첨을 진행합니다.
+            </p>
+          </div>
+          <div class="admin-top__actions">
+            <a class="admin-btn admin-btn--ghost" href="./" target="_blank" rel="noopener">추첨 화면 열기</a>
+            <a class="admin-btn admin-btn--ghost" href="../admin/index.html">공지 관리</a>
+            <button type="button" id="admin-logout" class="admin-btn admin-btn--ghost">로그아웃</button>
+          </div>
+        </header>
+
+        <div class="ld-admin-stats">
+          <div class="ld-stat"><span>전체</span><b id="statTotal">0</b></div>
+          <div class="ld-stat"><span>대기</span><b id="statReady">0</b></div>
+          <div class="ld-stat"><span>당첨 확정</span><b id="statWin">0</b></div>
+        </div>
+
+        <section class="admin-card ld-settings">
+          <h2 class="admin-card__title">추첨 설정</h2>
+          <label class="admin-check ld-mask">
+            <input type="checkbox" id="maskName" />
+            추첨 화면에서 이름 가리기 (홍길동 → 홍*동)
+          </label>
+
+          <div class="ld-settings__head">
+            <div>
+              <h3 class="ld-settings__title">등수</h3>
+              <p class="admin-card__desc">
+                큰 번호(낮은 등수)부터 추첨합니다. 정원이 모두 확정되면 다음 등수로 자동으로 넘어가고, 인원 0은
+                제한 없음이라 직접 등수 마감을 눌러야 합니다. 한 번에 추첨하면 남은 정원만큼 한꺼번에 뽑습니다.
+              </p>
+              <p class="ld-lock-note" id="tierLockNote" hidden>
+                추첨이 시작된 뒤에는 등수를 추가하거나 삭제할 수 없습니다. 라벨·인원·추첨 방식·상품명은 바꿀 수
+                있습니다. 등수 구성을 바꾸려면 아래 운영에서 당첨 초기화를 해 주세요.
+              </p>
+            </div>
+            <button class="admin-btn admin-btn--ghost" id="addTierBtn" type="button">+ 등수 추가</button>
+          </div>
+
+          <div class="ld-table-wrap">
+            <table class="ld-table ld-tier-table">
+              <thead>
+                <tr>
+                  <th>등수 번호</th>
+                  <th>라벨</th>
+                  <th>인원 (0=제한 없음)</th>
+                  <th>추첨 방식</th>
+                  <th>상품명</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody id="tierBody"></tbody>
+            </table>
+          </div>
+          <div class="ld-settings__foot">
+            <span class="ld-dirty" id="tierDirty" hidden>저장하지 않은 변경이 있습니다.</span>
+            <button class="admin-btn admin-btn--primary" id="saveTiersBtn" type="button">저장</button>
+          </div>
+        </section>
+
+        <div class="ld-admin-grid">
+          <div class="ld-admin-col">
+            <section class="admin-card">
+              <h2 class="admin-card__title">참가자 등록</h2>
+              <p class="admin-card__desc">
+                엑셀(xlsx, xls) 또는 CSV를 올리면 됩니다. <b>홍길동 1234</b>처럼 이름+휴대폰 뒷번호 한 칸이거나,
+                <b>이름</b> / <b>뒷번호</b> 두 열이어도 됩니다.
+              </p>
+              <div class="ld-admin-actions">
+                <label class="admin-btn admin-btn--primary" for="excelFile">엑셀 업로드</label>
+                <input id="excelFile" type="file" accept=".xlsx,.xls,.csv,text/csv" hidden />
+                <a class="admin-btn admin-btn--ghost" href="/api/luckydraw/template.csv">양식 받기</a>
+              </div>
+              <form id="addForm" class="admin-form" style="margin-top: 20px">
+                <label class="admin-field">
+                  <span>직접 입력 (한 줄에 한 명: <code>홍길동 1234</code> 또는 <code>홍길동|1234</code>)</span>
+                  <textarea id="userText" rows="5" placeholder="홍길동 1234"></textarea>
+                </label>
+                <div class="ld-admin-actions">
+                  <button class="admin-btn admin-btn--primary" type="submit">등록</button>
+                  <button class="admin-btn admin-btn--ghost" id="demoBtn" type="button">데모 20명 넣기</button>
+                </div>
+              </form>
+            </section>
+
+            <section class="admin-card">
+              <h2 class="admin-card__title">참가자 목록</h2>
+              <input class="ld-search" id="search" placeholder="이름 또는 연락처 검색" />
+              <div class="ld-table-wrap">
+                <table class="ld-table">
+                  <thead>
+                    <tr>
+                      <th>이름</th>
+                      <th>연락처</th>
+                      <th>상태</th>
+                      <th>추첨 시각</th>
+                    </tr>
+                  </thead>
+                  <tbody id="tableBody"></tbody>
+                </table>
+              </div>
+            </section>
+          </div>
+
+          <div class="ld-admin-col">
+            <section class="admin-card">
+              <h2 class="admin-card__title">추첨 진행</h2>
+              <p class="ld-draw-eyebrow">현재 등수</p>
+              <p class="ld-draw-now" id="drawNow">-</p>
+              <p class="ld-draw-sub" id="drawSub"></p>
+              <p class="admin-card__desc" id="drawHelp"></p>
+              <div class="ld-admin-actions">
+                <button class="admin-btn admin-btn--primary" id="drawBtn" type="button">추첨하기</button>
+                <button class="admin-btn admin-btn--ghost" id="dismissBtn" type="button">당첨 창 닫기</button>
+                <button class="admin-btn admin-btn--ghost" id="closePrizeBtn" type="button">등수 마감</button>
+              </div>
+              <p class="admin-card__desc" style="margin-top: 16px">
+                자리에 있는 사람은 <b>확정</b>, 없는 사람은 <b>불참</b>을 누르세요. 확정된 사람만 추첨 화면 명단에
+                올라가고, 불참으로 비운 자리는 다시 추첨할 수 있습니다.
+              </p>
+              <div class="ld-table-wrap">
+                <table class="ld-table">
+                  <thead>
+                    <tr>
+                      <th>이름</th>
+                      <th>연락처</th>
+                      <th>상태</th>
+                      <th></th>
+                    </tr>
+                  </thead>
+                  <tbody id="drawnBody"></tbody>
+                </table>
+              </div>
+            </section>
+
+            <section class="admin-card">
+              <h2 class="admin-card__title">운영</h2>
+              <p class="admin-card__desc">
+                당첨 초기화는 명단을 남기고 당첨 정보만 지웁니다. 전체 삭제는 명단까지 지웁니다.
+              </p>
+              <div class="ld-admin-actions">
+                <button class="admin-btn admin-btn--ghost" id="csvBtn" type="button">당첨자 CSV</button>
+                <button class="admin-btn admin-btn--ghost" id="resetBtn" type="button">당첨 초기화</button>
+                <button class="admin-btn admin-btn--danger" id="clearBtn" type="button">전체 삭제</button>
+              </div>
+            </section>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <script type="module" src="../js/luckydraw-admin.js"></script>
+  </body>
+</html>

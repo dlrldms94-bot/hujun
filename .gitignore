@@ -2,6 +2,7 @@ node_modules/
 .DS_Store
 uploads/
 server/data/files/
+server/data/luckydraw.json
 *.log
 .env
 .cursor/

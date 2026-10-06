@@ -220,6 +220,10 @@ function isUsingJson() {
   return useJson;
 }
 
+function getPool() {
+  return pool;
+}
+
 async function listNoticesPublic() {
   if (useJson) {
     return sortNotices(readSeed()).map(mapNoticePublic);
@@ -644,6 +648,7 @@ async function deletePopup(id) {
 module.exports = {
   initDatabase,
   isUsingJson,
+  getPool,
   listNoticesPublic,
   listNoticesAdmin,
   getNotice,

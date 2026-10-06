@@ -1,0 +1,709 @@
+:root {
+  --ld-navy: #0e1b52;
+  --ld-deep: #142a78;
+  --ld-pink: #ff3d97;
+  --ld-pink-soft: #ffd1e6;
+  --ld-cyan: #5fd3ff;
+  --ld-display: "MBC 1961 Gulim", "Pretendard", "Apple SD Gothic Neo", sans-serif;
+  --ld-ui: "Pretendard", "Apple SD Gothic Neo", sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+}
+
+/* ——— 추첨 화면 ——— */
+.ld-page {
+  color: #fff;
+  font-family: var(--ld-ui);
+  background: var(--ld-navy);
+}
+
+.ld-hero {
+  position: relative;
+  height: 100vh;
+  height: 100dvh;
+  overflow: hidden;
+  background: var(--ld-deep) url("../img/luckydraw-bg.png") center / cover no-repeat;
+}
+
+.ld-hero::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 90px;
+  background: linear-gradient(to bottom, transparent, #16308a);
+  pointer-events: none;
+}
+
+.ld-main {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 14vh 20px 0;
+  text-align: center;
+}
+
+.ld-logo {
+  margin: 0;
+  line-height: 0;
+}
+
+.ld-logo img {
+  width: clamp(220px, 23vw, 460px);
+  height: auto;
+  filter: drop-shadow(0 6px 24px rgba(255, 61, 151, 0.35));
+}
+
+.ld-title {
+  margin: 1.4vh 0 0;
+  font-family: var(--ld-display);
+  font-size: clamp(30px, 3.2vw, 62px);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: #fff;
+  text-shadow: 0 3px 18px rgba(10, 20, 70, 0.55);
+}
+
+.ld-reel-frame {
+  width: min(980px, 72vw);
+  margin: 4vh auto 0;
+  padding: 26px 34px;
+  border-radius: 28px;
+  background: rgba(12, 28, 92, 0.55);
+  border: 1px solid rgba(150, 215, 255, 0.45);
+  box-shadow:
+    0 0 0 1px rgba(255, 61, 151, 0.18) inset,
+    0 0 40px rgba(95, 211, 255, 0.25),
+    0 16px 50px rgba(5, 10, 40, 0.45);
+  backdrop-filter: blur(6px);
+}
+
+.ld-reel-window {
+  position: relative;
+  height: 360px;
+  overflow: hidden;
+  border-radius: 16px;
+}
+
+.ld-reel-window::before,
+.ld-reel-window::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 100px;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.ld-reel-window::before {
+  top: 0;
+  background: linear-gradient(to bottom, rgba(12, 28, 92, 0.96), rgba(12, 28, 92, 0.4) 50%, transparent);
+}
+
+.ld-reel-window::after {
+  bottom: 0;
+  background: linear-gradient(to top, rgba(12, 28, 92, 0.96), rgba(12, 28, 92, 0.4) 50%, transparent);
+}
+
+.ld-reel-highlight {
+  position: absolute;
+  left: 18px;
+  right: 18px;
+  top: 120px;
+  height: 120px;
+  z-index: 3;
+  pointer-events: none;
+  border: 2px solid rgba(255, 255, 255, 0.95);
+  border-radius: 14px;
+  box-shadow:
+    0 0 18px rgba(255, 61, 151, 0.55),
+    0 0 18px rgba(255, 61, 151, 0.35) inset;
+}
+
+.ld-reel {
+  will-change: transform;
+}
+
+.ld-reel.is-spinning {
+  filter: blur(0.4px);
+}
+
+.ld-reel-item {
+  height: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 22px;
+  padding: 0 24px;
+}
+
+.ld-reel-name {
+  font-size: clamp(36px, 3.6vw, 56px);
+  font-weight: 800;
+}
+
+.ld-reel-phone {
+  font-size: clamp(28px, 2.8vw, 42px);
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: var(--ld-pink-soft);
+}
+
+.ld-reel-empty {
+  height: 360px;
+  display: grid;
+  place-items: center;
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 28px;
+}
+
+.ld-status {
+  margin: 3.4vh 0 0;
+  min-width: 260px;
+  height: 68px;
+  padding: 0 44px;
+  border-radius: 999px;
+  display: grid;
+  place-items: center;
+  font-size: 28px;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  color: #fff;
+  background: linear-gradient(90deg, #ff3d97, #b04bff);
+  box-shadow: 0 8px 28px rgba(255, 61, 151, 0.45);
+}
+
+/* ——— 당첨자 명단 ——— */
+.ld-board {
+  padding: 96px 0 120px;
+  background: linear-gradient(180deg, #16308a 0%, var(--ld-navy) 100%);
+}
+
+.ld-board:not(:has(.ld-prize:not([hidden]))) {
+  display: none;
+}
+
+.ld-prize[hidden] {
+  display: none !important;
+}
+
+.ld-prize:not([hidden]) ~ .ld-prize:not([hidden]) {
+  margin-top: 56px;
+}
+
+.ld-prize h2 {
+  width: min(980px, 86vw);
+  margin: 0 auto 32px;
+  font-family: var(--ld-display);
+  font-size: clamp(38px, 4.4vw, 64px);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  text-align: center;
+  color: #fff;
+  text-shadow: 0 0 22px rgba(255, 61, 151, 0.55);
+}
+
+.ld-prize__item {
+  margin: -16px auto 28px;
+  font-size: clamp(22px, 2vw, 30px);
+  font-weight: 700;
+  text-align: center;
+  color: var(--ld-pink-soft);
+}
+
+.ld-winner-list {
+  list-style: none;
+  width: min(980px, 86vw);
+  margin: 0 auto;
+  padding: 28px 56px 32px;
+  border-radius: 24px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(150, 215, 255, 0.3);
+}
+
+.ld-winner-list.is-top {
+  background: linear-gradient(180deg, #ffe3f0 0%, #ffc2de 100%);
+  border: 0;
+  color: var(--ld-navy);
+}
+
+.ld-winner-list li {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  padding: 18px 12px;
+  font-size: clamp(30px, 3.2vw, 46px);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.ld-winner-list li:last-child,
+.ld-winner-list.is-top li {
+  border-bottom: 0;
+}
+
+.ld-badge {
+  flex-shrink: 0;
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  font-size: 28px;
+  font-weight: 800;
+  color: var(--ld-navy);
+  background: #fff;
+}
+
+.ld-winner-list.is-top .ld-badge {
+  color: #fff;
+  background: var(--ld-pink);
+}
+
+/* ——— 당첨 팝업 ——— */
+.ld-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 20;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  background: rgba(6, 12, 40, 0.72);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease;
+}
+
+.ld-overlay.is-open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.ld-modal {
+  min-width: min(1100px, calc(100vw - 48px));
+  max-width: calc(100vw - 48px);
+  max-height: calc(100vh - 48px);
+  overflow: auto;
+  padding: 48px 64px 40px;
+  border-radius: 28px;
+  text-align: center;
+  color: var(--ld-navy);
+  background: #fff;
+  border: 4px solid transparent;
+  background:
+    linear-gradient(#fff, #fff) padding-box,
+    linear-gradient(90deg, var(--ld-pink), var(--ld-cyan)) border-box;
+  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.4);
+  transform: translateY(12px) scale(0.98);
+  transition: transform 0.25s ease;
+}
+
+.ld-overlay.is-open .ld-modal {
+  transform: none;
+}
+
+.ld-modal__rank {
+  font-family: var(--ld-display);
+  font-size: clamp(36px, 4.4vw, 64px);
+  font-weight: 700;
+  line-height: 1.25;
+  letter-spacing: -0.02em;
+  color: var(--ld-pink);
+}
+
+.ld-modal__item {
+  margin: 10px 0 0;
+  font-size: clamp(22px, 2vw, 32px);
+  font-weight: 700;
+  color: var(--ld-navy);
+}
+
+.ld-modal__winners {
+  list-style: none;
+  margin: 24px auto 8px;
+  padding: 0;
+}
+
+.ld-modal__winners.is-multi {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  column-gap: 40px;
+}
+
+.ld-modal__winners.is-multi li {
+  justify-content: flex-start;
+  padding: 14px 8px;
+  font-size: clamp(30px, 3vw, 48px);
+}
+
+.ld-modal__winners.is-many {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.ld-modal__winners.is-many li {
+  gap: 14px;
+  font-size: clamp(24px, 2.2vw, 36px);
+}
+
+.ld-modal__winners.is-multi .ld-badge {
+  width: 56px;
+  height: 56px;
+  font-size: 24px;
+}
+
+.ld-modal__winners li {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 22px;
+  padding: 24px 8px;
+  font-size: clamp(44px, 5vw, 76px);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  white-space: nowrap;
+}
+
+.ld-modal__winners .ld-badge {
+  width: 72px;
+  height: 72px;
+  font-size: 32px;
+  color: #fff;
+  background: var(--ld-navy);
+}
+
+.ld-confetti {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 25;
+  pointer-events: none;
+}
+
+@media (max-height: 860px) {
+  .ld-main {
+    padding-top: 9vh;
+  }
+
+  .ld-logo img {
+    width: clamp(200px, 19vw, 360px);
+  }
+
+  .ld-reel-frame {
+    margin-top: 2.6vh;
+    padding: 18px 28px;
+  }
+
+  .ld-status {
+    margin-top: 2.4vh;
+    height: 58px;
+    font-size: 24px;
+  }
+}
+
+@media (max-width: 960px) {
+  .ld-reel-frame {
+    width: calc(100% - 16px);
+    padding: 16px;
+  }
+
+  .ld-reel-name {
+    font-size: 30px;
+  }
+
+  .ld-reel-phone {
+    font-size: 22px;
+  }
+
+  .ld-winner-list {
+    width: calc(100% - 32px);
+    padding: 16px 20px;
+  }
+
+  .ld-modal {
+    padding: 28px 20px 24px;
+  }
+}
+
+/* ——— 관리자 ——— */
+.ld-admin-stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.ld-stat {
+  min-width: 120px;
+  padding: 12px 18px;
+  border-radius: 14px;
+  background: #fff;
+  border: 1px solid rgba(0, 64, 151, 0.12);
+}
+
+.ld-stat span {
+  display: block;
+  font-size: 0.8rem;
+  color: #6b7280;
+}
+
+.ld-stat b {
+  display: block;
+  margin-top: 4px;
+  font-size: 1.5rem;
+}
+
+.ld-admin-grid {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: 20px;
+  align-items: start;
+}
+
+.ld-admin-col {
+  display: grid;
+  gap: 20px;
+}
+
+.ld-admin-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.ld-draw-eyebrow {
+  margin: 0;
+  font-size: 0.8rem;
+  color: #6b7280;
+}
+
+.ld-draw-now {
+  margin: 2px 0 4px;
+  font-size: 1.5rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+
+.ld-draw-sub {
+  margin: 0 0 6px;
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+
+.ld-settings {
+  margin-bottom: 20px;
+}
+
+.ld-mask {
+  margin: 4px 0 20px;
+}
+
+.ld-mask input {
+  width: 18px;
+  height: 18px;
+}
+
+.ld-settings__head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+  padding-top: 18px;
+  border-top: 1px solid rgba(0, 64, 151, 0.1);
+}
+
+.ld-settings__title {
+  margin: 0 0 6px;
+  font-size: 1rem;
+}
+
+.ld-lock-note {
+  margin: 6px 0 0;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #c2410c;
+}
+
+.ld-settings__head .admin-btn {
+  flex-shrink: 0;
+}
+
+.ld-settings__foot {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 12px;
+  margin-top: 14px;
+}
+
+.ld-dirty {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #c2410c;
+}
+
+.ld-tier-table td {
+  padding: 8px 10px;
+}
+
+.ld-tier-table td:last-child {
+  width: 1%;
+  text-align: right;
+}
+
+.ld-input {
+  width: 100%;
+  min-width: 70px;
+  padding: 8px 10px;
+  border: 1px solid rgba(0, 64, 151, 0.18);
+  border-radius: 8px;
+  background: #fff;
+  font: inherit;
+  color: inherit;
+}
+
+.ld-input.is-number {
+  max-width: 64px;
+  color: #9ca3af;
+  background: #f2f4f8;
+}
+
+.ld-icon-btn {
+  padding: 6px 10px;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  font: inherit;
+  font-size: 0.85rem;
+  white-space: nowrap;
+  color: #e52f81;
+  cursor: pointer;
+}
+
+.ld-icon-btn:hover:not(:disabled) {
+  background: rgba(229, 47, 129, 0.08);
+}
+
+.ld-icon-btn:disabled {
+  color: #c4c8d0;
+  cursor: not-allowed;
+}
+
+.ld-row-actions {
+  white-space: nowrap;
+}
+
+.ld-row-actions .admin-btn + .admin-btn {
+  margin-left: 6px;
+}
+
+.admin-btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.ld-table-wrap {
+  max-height: 480px;
+  overflow: auto;
+  margin-top: 12px;
+  border: 1px solid rgba(0, 64, 151, 0.12);
+  border-radius: 12px;
+}
+
+.ld-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+}
+
+.ld-table th,
+.ld-table td {
+  padding: 10px 12px;
+  text-align: left;
+  border-bottom: 1px solid rgba(0, 64, 151, 0.08);
+}
+
+.ld-table th {
+  position: sticky;
+  top: 0;
+  background: #f4f7fb;
+  color: #6b7280;
+  font-weight: 600;
+}
+
+.ld-table td.is-muted {
+  color: #9ca3af;
+}
+
+.ld-table .admin-btn {
+  padding: 0.35rem 0.8rem;
+  font-size: 0.85rem;
+}
+
+.ld-tag {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #1a7f4b;
+  background: #e8f6ee;
+}
+
+.ld-tag.is-wait {
+  color: #555;
+  background: #f2f2f2;
+}
+
+.ld-tag.is-absent {
+  color: #b42318;
+  background: #fdecea;
+}
+
+.ld-search {
+  width: 100%;
+  padding: 10px 14px;
+  border: 1px solid rgba(0, 64, 151, 0.18);
+  border-radius: 10px;
+  font: inherit;
+}
+
+.ld-toast {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  z-index: 40;
+  padding: 12px 16px;
+  border-radius: 12px;
+  color: #fff;
+  background: #111;
+  opacity: 0;
+  transform: translateY(8px);
+  transition: 0.2s ease;
+}
+
+.ld-toast.is-show {
+  opacity: 1;
+  transform: none;
+}
+
+@media (max-width: 960px) {
+  .ld-admin-grid {
+    grid-template-columns: 1fr;
+  }
+}

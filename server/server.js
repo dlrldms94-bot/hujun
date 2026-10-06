@@ -3,6 +3,7 @@ const crypto = require("crypto");
 const multer = require("multer");
 const path = require("path");
 const db = require("./db");
+const luckydraw = require("./luckydraw");
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -19,6 +20,12 @@ const upload = multer({
 });
 
 app.use(express.json({ limit: "2mb" }));
+app.use(function (req, res, next) {
+  if (/^\/(server|node_modules)(\/|$)/i.test(req.path) || /^\/\./.test(req.path)) {
+    return res.status(404).send("Not found");
+  }
+  next();
+});
 app.use(express.static(ROOT));
 
 function formatDate(date) {
@@ -377,13 +384,17 @@ app.get(
   })
 );
 
+luckydraw.register(app, { requireAdmin: requireAdmin });
+
 async function start() {
   await db.initDatabase();
+  await luckydraw.init(db.getPool());
 
   app.listen(PORT, function () {
     console.log("제24회 허준축제 서버: http://localhost:" + PORT);
     console.log("공지 관리: http://localhost:" + PORT + "/admin/");
     console.log("팝업 관리: http://localhost:" + PORT + "/admin/popup.html");
+    console.log("경품추첨: http://localhost:" + PORT + "/luckydraw/");
     console.log("DB:", db.isUsingJson() ? "JSON (local)" : "PostgreSQL");
   });
 }
