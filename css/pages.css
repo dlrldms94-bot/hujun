@@ -295,6 +295,18 @@
   box-shadow: 0 12px 28px rgba(0, 64, 151, 0.22);
 }
 
+.program-tabs__list--quad {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  max-width: 60rem;
+}
+
+@media (max-width: 1100px) {
+  .program-tabs__list--quad {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    max-width: 40rem;
+  }
+}
+
 .program-tabs__btn {
   position: relative;
   display: inline-flex;
@@ -1056,6 +1068,60 @@
   font-size: 0.8rem;
   font-weight: 700;
   line-height: 1.2;
+}
+
+.lineup {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.75rem;
+  max-width: 44rem;
+  margin: 0 auto;
+  padding: 0;
+}
+
+.lineup li {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 3.75rem;
+  padding: 0.9rem 1.1rem;
+  border-radius: 1rem;
+  background: rgba(232, 243, 250, 0.72);
+  border: 1px solid rgba(0, 64, 151, 0.1);
+  color: var(--navy);
+  font-size: 1.02rem;
+  font-weight: 700;
+  line-height: 1.35;
+  text-align: center;
+  word-break: keep-all;
+}
+
+.lineup--wide {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  max-width: 56rem;
+}
+
+@media (max-width: 760px) {
+  .lineup--wide {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 480px) {
+  .lineup:not(.lineup--wide) {
+    grid-template-columns: 1fr;
+  }
+
+  .lineup--wide {
+    gap: 0.5rem;
+  }
+
+  .lineup--wide li {
+    min-height: 3.25rem;
+    padding: 0.7rem 0.6rem;
+    font-size: 0.9rem;
+  }
 }
 
 .content-list {
